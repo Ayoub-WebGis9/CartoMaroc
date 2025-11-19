@@ -1,1157 +1,706 @@
+
 <!DOCTYPE html>
-<html lang="en" class=""><head><script>window.livecodes = window.livecodes || {};</script><title>Untitled Project</title><meta name="title" content="Untitled Project"><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><style id="__livecodes_styles__">@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --primary-color: #2c3e50;
-    --secondary-color: #3498db;
-    --accent-color: #e74c3c;
-    --text-color: #333;
-    --light-bg: #f8f9fa;
-    --white: #ffffff;
-    --shadow: 0 5px 20px rgba(0,0,0,0.1);
-    --transition: all 0.3s ease;
-}
-
-body {
-    font-family: 'Cairo', sans-serif;
-    line-height: 1.6;
-    color: var(--text-color);
-    overflow-x: hidden;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Navbar */
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: var(--white);
-    box-shadow: var(--shadow);
-    z-index: 1000;
-    padding: 1rem 0;
-}
-
-.navbar .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
-.logo i {
-    color: var(--secondary-color);
-}
-
-.nav-links {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 600;
-    transition: var(--transition);
-    position: relative;
-}
-
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    right: 0;
-    width: 0;
-    height: 2px;
-    background: var(--secondary-color);
-    transition: var(--transition);
-}
-
-.nav-links a:hover::after {
-    width: 100%;
-}
-
-.nav-links a:hover {
-    color: var(--secondary-color);
-}
-
-.burger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.burger div {
-    width: 25px;
-    height: 3px;
-    background: var(--primary-color);
-    margin: 5px;
-    transition: var(--transition);
-}
-
-/* Hero Section */
-.hero {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: var(--white);
-    overflow: hidden;
-}
-
-.hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
-    background-size: cover;
-    background-position: bottom;
-    opacity: 0.3;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    padding: 2rem;
-}
-
-.hero h1 {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    font-weight: 900;
-}
-
-.hero h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    font-weight: 600;
-}
-
-.hero p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.btn {
-    padding: 1rem 2rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: var(--transition);
-    display: inline-block;
-}
-
-.btn-primary {
-    background: var(--white);
-    color: var(--primary-color);
-}
-
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: var(--white);
-    border: 2px solid var(--white);
-}
-
-.btn-secondary:hover {
-    background: var(--white);
-    color: var(--primary-color);
-}
-
-/* Animations */
-.fade-in {
-    animation: fadeIn 1s ease-in;
-}
-
-.fade-in-delay {
-    animation: fadeIn 1s ease-in 0.3s both;
-}
-
-.fade-in-delay-2 {
-    animation: fadeIn 1s ease-in 0.6s both;
-}
-
-.fade-in-delay-3 {
-    animation: fadeIn 1s ease-in 0.9s both;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Carte touristique - Rabat</title>
+  <script src="https://cdn.jsdelivr.net/npm/ol@v7.4.0/dist/ol.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; background: #f5f5f5; }
+    #map { width: 100%; height: 100vh; position: relative; }
+    .app-header { position: absolute; top: 0; left: 0; right: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; display: flex; align-items: center; justify-content: space-between; }
+    .header-title { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: bold; }
+    .header-icon { font-size: 24px; }
+    .menu-btn, .lang-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 24px; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+    .menu-btn:active, .lang-btn:active { transform: scale(0.9); }
+    .sidebar { position: fixed; top: 0; right: -320px; width: 320px; height: 100vh; background: white; box-shadow: -4px 0 20px rgba(0,0,0,0.2); z-index: 2000; transition: right 0.3s ease; overflow-y: auto; }
+    .sidebar.open { right: 0; }
+    .sidebar-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; font-size: 20px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .close-btn { background: none; border: none; color: white; font-size: 28px; cursor: pointer; }
+    .sidebar-content { padding: 15px; }
+    .section-title { font-size: 16px; font-weight: bold; color: #667eea; margin: 20px 0 10px 0; padding-bottom: 8px; border-bottom: 2px solid #667eea; }
+    .legend-item { display: flex; align-items: center; padding: 10px; margin: 8px 0; background: #f8f9fa; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+    .legend-item:active { transform: scale(0.98); }
+    .legend-item input[type="checkbox"] { width: 20px; height: 20px; margin-left: 10px; cursor: pointer; }
+    .legend-icon { font-size: 24px; margin: 0 10px; min-width: 30px; text-align: center; }
+    .legend-color { width: 20px; height: 20px; border-radius: 4px; margin: 0 10px; border: 2px solid #666; }
+    .legend-label { flex: 1; font-size: 14px; }
+    .slider-control { padding: 15px; background: #f8f9fa; border-radius: 8px; margin: 10px 0; }
+    .slider-control label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; }
+    .slider-control input[type="range"] { width: 100%; height: 6px; border-radius: 3px; background: #ddd; outline: none; }
+    .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1500; display: none; }
+    .overlay.active { display: block; }
+    .search-container { position: absolute; top: 70px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; z-index: 999; }
+    .search-box { display: flex; background: white; border-radius: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); overflow: hidden; }
+    .search-box input { flex: 1; border: none; padding: 12px 20px; font-size: 15px; outline: none; }
+    .search-box button { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white; padding: 12px 20px; cursor: pointer; font-size: 16px; }
+    .action-buttons { position: absolute; bottom: 100px; left: 15px; display: flex; flex-direction: column; gap: 12px; z-index: 999; }
+    .action-btn { width: 50px; height: 50px; border-radius: 50%; background: white; border: none; font-size: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+    .action-btn:active { transform: scale(0.9); }
+    .action-btn.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+    .ol-popup { 
+      position: absolute; 
+      background: white; 
+      padding: 0; 
+      border-radius: 12px; 
+      min-width: 220px; 
+      max-width: 280px; 
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25); 
+      overflow: hidden; 
+      font-size: 14px;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    .popup-header { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+      color: white; 
+      padding: 12px; 
+      font-size: 15px; 
+      font-weight: bold; 
+      display: flex; 
+      align-items: center; 
+      gap: 8px; 
     }
-}
+    .popup-content { 
+      padding: 12px; 
+      max-height: 250px; 
+      overflow-y: auto; 
+      font-size: 13px;
+    }
+    .popup-item { padding: 8px 0; border-bottom: 1px solid #eee; }
+    .popup-item:last-child { border-bottom: none; }
+    .popup-label { font-size: 11px; color: #777; margin-bottom: 3px; }
+    .popup-value { font-size: 14px; color: #333; font-weight: 500; }
+    .popup-footer { 
+      padding: 8px 12px; 
+      text-align: right; 
+      font-size: 11px; 
+      color: #888; 
+      border-top: 1px solid #f0f0f0; 
+    }
+    .map-signature {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      z-index: 1000;
+      pointer-events: none;
+    }
+    .bus-line-item { padding: 12px; margin: 8px 0; background: #f8f9fa; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.2s; border: 2px solid transparent; }
+    .bus-line-item:hover { background: #e9ecef; border-color: #667eea; }
+    .bus-line-item:active { transform: scale(0.98); }
+    .bus-line-color { width: 30px; height: 6px; border-radius: 3px; }
+    .bottom-sheet { position: fixed; bottom: -400px; left: 0; right: 0; height: 400px; background: white; border-radius: 20px 20px 0 0; box-shadow: 0 -4px 20px rgba(0,0,0,0.2); z-index: 1100; transition: bottom 0.3s ease; }
+    .bottom-sheet.open { bottom: 0; }
+    .sheet-header { padding: 15px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
+    .sheet-title { font-size: 18px; font-weight: bold; }
+    .sheet-close { background: none; border: none; font-size: 24px; cursor: pointer; }
+    .sheet-content { padding: 15px; height: calc(100% - 60px); overflow-y: auto; }
+    .place-card { background: #f8f9fa; border-radius: 12px; padding: 15px; margin-bottom: 12px; display: flex; gap: 15px; cursor: pointer; }
+    .place-icon { font-size: 32px; }
+    .place-info { flex: 1; }
+    .place-name { font-size: 16px; font-weight: bold; margin-bottom: 4px; }
+    .place-type { font-size: 13px; color: #667eea; }
+    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); color: white; padding: 12px 24px; border-radius: 25px; z-index: 3000; display: none; }
+    .toast.show { display: block; animation: fadeInOut 3s; }
+    @keyframes fadeInOut { 0%, 100% { opacity: 0; } 10%, 90% { opacity: 1; } }
+  </style>
+</head>
+<body>
+  <div class="app-header">
+    <button class="menu-btn" id="menuBtn">☰</button>
+    <div class="header-title"><span class="header-icon">🗺️</span><span>Carte touristique - Rabat</span></div>
+    <a href="https://www.cartomaroc.com" target="_blank" class="lang-btn" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">🌐</a>
 
-/* Section Title */
-.section-title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    color: var(--primary-color);
-    position: relative;
-    padding-bottom: 1rem;
-}
+  </div>
 
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 50%;
-    transform: translateX(50%);
-    width: 80px;
-    height: 4px;
-    background: var(--secondary-color);
-}
+  <div id="map"></div>
+  <div class="map-signature">@CartoMaroc</div>
 
-/* About Section */
-.about {
-    padding: 5rem 0;
-    background: var(--white);
-}
+  <div class="search-container">
+    <div class="search-box">
+      <input id="searchInput" type="text" placeholder="Rechercher un site touristique...">
+      <button id="searchBtn">🔍</button>
+    </div>
+  </div>
 
-.about-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 3rem;
-    align-items: center;
-}
+  <div class="action-buttons">
+    <button class="action-btn" id="locateBtn">📍</button>
+    <button class="action-btn" id="pinBtn">📌</button>
+    <button class="action-btn" id="nearestBtn">🎯</button>
+  </div>
 
-.about-text p {
-    margin-bottom: 1.5rem;
-    font-size: 1.1rem;
-    line-height: 1.8;
-}
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span>Menu</span>
+      <button class="close-btn" id="closeBtn">×</button>
+    </div>
+    <div class="sidebar-content">
+      <div class="section-title">Types de sites touristiques</div>
+      <div id="legend-types"></div>
+      <div class="section-title">Lignes de bus</div>
+      <div class="slider-control">
+        <label>Épaisseur des lignes : <span id="thVal">3</span>px</label>
+        <input id="lineThickness" type="range" min="2" max="12" value="3" />
+      </div>
+      <div id="legend-lines"></div>
+    </div>
+  </div>
 
-.about-icon {
-    text-align: center;
-}
+  <div class="overlay" id="overlay"></div>
+  <div id="popup" class="ol-popup" style="display:none;"></div>
 
-.about-icon i {
-    font-size: 10rem;
-    color: var(--secondary-color);
-    opacity: 0.2;
-}
+  <div class="bottom-sheet" id="bottomSheet">
+    <div class="sheet-header">
+      <span class="sheet-title">Sites les plus proches</span>
+      <button class="sheet-close" id="sheetClose">×</button>
+    </div>
+    <div class="sheet-content" id="sheetContent"></div>
+  </div>
 
-/* Skills Section */
-.skills {
-    padding: 5rem 0;
-    background: var(--light-bg);
-}
+  <div class="toast" id="toast"></div>
 
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-}
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const closeBtn = document.getElementById('closeBtn');
+    const overlay = document.getElementById('overlay');
+    const toast = document.getElementById('toast');
 
-.skill-category {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-}
-
-.skill-category:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-}
-
-.skill-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.skill-header i {
-    font-size: 2.5rem;
-    color: var(--secondary-color);
-}
-
-.skill-header h3 {
-    color: var(--primary-color);
-    font-size: 1.3rem;
-}
-
-.skill-category ul {
-    list-style: none;
-}
-
-.skill-category li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #eee;
-    transition: var(--transition);
-}
-
-.skill-category li:last-child {
-    border-bottom: none;
-}
-
-.skill-category li:hover {
-    padding-right: 10px;
-    color: var(--secondary-color);
-}
-
-/* Projects Section */
-.projects {
-    padding: 5rem 0;
-    background: var(--white);
-}
-
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.project-card {
-    background: var(--white);
-    border-radius: 15px;
-    padding: 2rem;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    border: 2px solid transparent;
-}
-
-.project-card:hover {
-    transform: translateY(-10px);
-    border-color: var(--secondary-color);
-    box-shadow: 0 15px 40px rgba(52, 152, 219, 0.2);
-}
-
-.project-icon {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, var(--secondary-color), #2980b9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-}
-
-.project-icon i {
-    font-size: 2rem;
-    color: var(--white);
-}
-
-.project-card h3 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
-}
-
-.project-card ul {
-    list-style: none;
-    margin-bottom: 1.5rem;
-}
-
-.project-card li {
-    padding: 0.5rem 0;
-    padding-right: 1.5rem;
-    position: relative;
-}
-
-.project-card li::before {
-    content: '✓';
-    position: absolute;
-    right: 0;
-    color: var(--secondary-color);
-    font-weight: bold;
-}
-
-.project-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--secondary-color);
-    text-decoration: none;
-    font-weight: 600;
-    transition: var(--transition);
-}
-
-.project-link:hover {
-    gap: 1rem;
-}
-
-/* Services Section */
-.services {
-    padding: 5rem 0;
-    background: var(--light-bg);
-}
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-}
-
-.service-card {
-    background: var(--white);
-    padding: 2.5rem;
-    border-radius: 15px;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    text-align: center;
-}
-
-.service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-}
-
-.service-icon {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, var(--accent-color), #c0392b);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-}
-
-.service-icon i {
-    font-size: 2.5rem;
-    color: var(--white);
-}
-
-.service-card h3 {
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    font-size: 1.3rem;
-}
-
-.service-card ul {
-    list-style: none;
-    text-align: right;
-}
-
-.service-card li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #eee;
-}
-
-.service-card li:last-child {
-    border-bottom: none;
-}
-
-/* Clients Section */
-.clients {
-    padding: 5rem 0;
-    background: var(--white);
-}
-
-.clients-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-}
-
-.client-item {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: var(--white);
-    padding: 1.5rem;
-    border-radius: 10px;
-    text-align: center;
-    font-weight: 600;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.client-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-}
-
-.client-item i {
-    font-size: 1.5rem;
-}
-
-/* Contact Section */
-.contact {
-    padding: 5rem 0;
-    background: var(--light-bg);
-}
-
-.contact-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-}
-
-.contact-info {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.contact-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    background: var(--white);
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-}
-
-.contact-item i {
-    font-size: 1.5rem;
-    color: var(--secondary-color);
-    margin-top: 0.3rem;
-}
-
-.contact-item h4 {
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-}
-
-.contact-item p,
-.contact-item a {
-    color: var(--text-color);
-    text-decoration: none;
-}
-
-.social-links {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.social-links a {
-    width: 50px;
-    height: 50px;
-    background: var(--secondary-color);
-    color: var(--white);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    transition: var(--transition);
-}
-
-.social-links a:hover {
-    background: var(--primary-color);
-    transform: translateY(-5px);
-}
-
-.contact-form {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: var(--shadow);
-}
-
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border: 2px solid #eee;
-    border-radius: 8px;
-    font-family: 'Cairo', sans-serif;
-    transition: var(--transition);
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-    outline: none;
-    border-color: var(--secondary-color);
-}
-
-.contact-form button {
-    width: 100%;
-    padding: 1rem;
-    border: none;
-    cursor: pointer;
-    font-size: 1.1rem;
-}
-
-/* Footer */
-.footer {
-    background: var(--primary-color);
-    color: var(--white);
-    text-align: center;
-    padding: 2rem 0;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .burger {
-        display: flex;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
-    .nav-links {
-        position: fixed;
-        left: -100%;
-        top: 70px;
-        flex-direction: column;
-        background: var(--white);
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow: var(--shadow);
-        padding: 2rem 0;
-    }
-
-    .nav-links.active {
-        left: 0;
-    }
-
-    .hero h1 {
-        font-size: 2.5rem;
-    }
-
-    .hero h2 {
-        font-size: 1.5rem;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-    }
-
-    .about-content {
-        grid-template-columns: 1fr;
-    }
-
-    .about-icon {
-        display: none;
-    }
-
-    .contact-content {
-        grid-template-columns: 1fr;
-    }
-
-    .skills-grid,
-    .projects-grid,
-    .services-grid {
-        grid-template-columns: 1fr;
-    }
-}
-</style><script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" async=""></script><script type="importmap">{
-  "imports": {}
-}</script></head><body>
-
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayoub Daouiri - WebGIS &amp; Geospatial Developer</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <i class="fas fa-map-marked-alt"></i>
-                <span>AYOUB DAOUIRI</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#home">الرئيسية</a></li>
-                <li><a href="#about">نبذة</a></li>
-                <li><a href="#skills">المهارات</a></li>
-                <li><a href="#projects">الأعمال</a></li>
-                <li><a href="#services">الخدمات</a></li>
-                <li><a href="#contact">تواصل</a></li>
-            </ul>
-            <div class="burger">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1 class="fade-in">AYOUB DAOUIRI</h1>
-            <h2 class="fade-in-delay">WebGIS &amp; Geospatial Developer</h2>
-            <p class="fade-in-delay-2">متخصص في نظم المعلومات الجغرافية، الكارطوغرافيا الرقمية، وتطوير منصّات WebGIS التفاعلية</p>
-            <div class="hero-buttons fade-in-delay-3">
-                <a href="#projects" class="btn btn-primary">استكشف أعمالي</a>
-                <a href="#contact" class="btn btn-secondary">تواصل معي</a>
-            </div>
-        </div>
-        <div class="hero-background"></div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">نبذة مختصرة</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>أنا خبير في الجيوماتيك والكارطوغرافيا، أمتلك خبرة قوية في تحليل البيانات الجغرافية وتطوير واجهات خرائط تفاعلية تعتمد على تقنيات حديثة. أشتغل على بناء منصّات GIS عبر الويب تسمح للمستخدمين باستكشاف البيانات الجغرافية بطريقة سلسة، مرنة، وسريعة.</p>
-                    <p>أساعد المؤسسات في تحويل بياناتها إلى خرائط تفاعلية عملية وقابلة للاستعمال في السياحة، التهيئة الحضرية، البيئة، النقل، العقار، والتنمية الترابية.</p>
-                </div>
-                <div class="about-icon">
-                    <i class="fas fa-globe-americas"></i>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2 class="section-title">المهارات التقنية</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <i class="fas fa-map"></i>
-                        <h3>تقنيات WebGIS</h3>
-                    </div>
-                    <ul>
-                        <li>Leaflet.js</li>
-                        <li>OpenLayers</li>
-                        <li>MapLibre / Mapbox</li>
-                        <li>Cesium 3D</li>
-                        <li>GeoServer</li>
-                        <li>QGIS Server</li>
-                        <li>GitHub Pages Hosting</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <i class="fas fa-satellite"></i>
-                        <h3>المعالجة الجيومكانية</h3>
-                    </div>
-                    <ul>
-                        <li>QGIS</li>
-                        <li>ArcGIS</li>
-                        <li>Google Earth Engine</li>
-                        <li>GDAL / Raster Processing</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <i class="fas fa-code"></i>
-                        <h3>تطوير الويب</h3>
-                    </div>
-                    <ul>
-                        <li>HTML5 / CSS3 / JavaScript</li>
-                        <li>JSON / GeoJSON</li>
-                        <li>APIs</li>
-                        <li>Git – GitHub</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <i class="fas fa-compass"></i>
-                        <h3>كارتوغرافيا احترافية</h3>
-                    </div>
-                    <ul>
-                        <li>تصميم خرائط عالية الدقة</li>
-                        <li>اختيار الرموز والألوان</li>
-                        <li>إنشاء Legend و UI احترافية</li>
-                        <li>بناء StoryMaps</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2 class="section-title">أبرز الأعمال</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3>منصة خرائط تفاعلية للسياحة – طنجة</h3>
-                    <ul>
-                        <li>عرض المعالم السياحية</li>
-                        <li>خطوط ومحطات النقل الحضري</li>
-                        <li>تصميم واجهة عصرية وسريعة</li>
-                        <li>بناء طبقات متعددة (POI + Transport + Services)</li>
-                    </ul>
-                    <a href="#" class="project-link">عرض المشروع <i class="fas fa-arrow-left"></i></a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-chart-area"></i>
-                    </div>
-                    <h3>تطبيق WebGIS لاستخراج مقطع طبوغرافي Online</h3>
-                    <ul>
-                        <li>استخراج Profile لأي نقطة في العالم</li>
-                        <li>بناء خوارزمية معالجة الارتفاعات</li>
-                        <li>عرض Chart تفاعلي</li>
-                        <li>تحميل النتائج بصيغة PDF/PNG</li>
-                    </ul>
-                    <a href="#" class="project-link">عرض المشروع <i class="fas fa-arrow-left"></i></a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-city"></i>
-                    </div>
-                    <h3>منصة لإدارة المشاريع الجماعية Commune WebGIS</h3>
-                    <ul>
-                        <li>خريطة للمشاريع التنموية</li>
-                        <li>متابعة تقدم إنجاز المشاريع</li>
-                        <li>إضافة layers: الإنارة، الطرق، المساحات الخضراء</li>
-                        <li>نظام بحث متقدم داخل الخريطة</li>
-                    </ul>
-                    <a href="#" class="project-link">عرض المشروع <i class="fas fa-arrow-left"></i></a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <h3>خريطة عقارية WebGIS Real Estate</h3>
-                    <ul>
-                        <li>عرض الأراضي والقطع المتاحة</li>
-                        <li>إظهار معلومات الملكية</li>
-                        <li>حساب المساحات والمسافات</li>
-                        <li>واجهة تستجيب للهاتف</li>
-                    </ul>
-                    <a href="#" class="project-link">عرض المشروع <i class="fas fa-arrow-left"></i></a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <h3>لوحة تحليل بيئي – NDVI Web Dashboard</h3>
-                    <ul>
-                        <li>تحليل الغطاء النباتي مباشرة من الخريطة</li>
-                        <li>Graphs + Charts</li>
-                        <li>تفاعل سريع مع GeoTIFF</li>
-                        <li>واجهة Dashboard كاملة</li>
-                    </ul>
-                    <a href="#" class="project-link">عرض المشروع <i class="fas fa-arrow-left"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="services">
-        <div class="container">
-            <h2 class="section-title">الخدمات المقدمة</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h3>تطوير منصّات WebGIS كاملة</h3>
-                    <ul>
-                        <li>خرائط تفاعلية متعددة الطبقات</li>
-                        <li>تحليل مكاني عبر المتصفح</li>
-                        <li>إدارة البيانات الجغرافية Online</li>
-                        <li>تصميم واجهة كاملة UX/UI</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-map-marked"></i>
-                    </div>
-                    <h3>خرائط سياحية احترافية</h3>
-                    <ul>
-                        <li>معالم، فنادق، ومسارات</li>
-                        <li>نقل حضري</li>
-                        <li>صور ووصف تفصيلي</li>
-                        <li>زر تحديد الموقع الحالي</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                    <h3>تطوير أدوات جغرافية Online</h3>
-                    <ul>
-                        <li>مقطع طبوغرافي</li>
-                        <li>حساب المسافات والمساحات</li>
-                        <li>تحويل الإحداثيات</li>
-                        <li>استخراج بيانات الارتفاع DEM</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-landmark"></i>
-                    </div>
-                    <h3>حلول رقمية للجماعات الترابية</h3>
-                    <ul>
-                        <li>خريطة المشاريع</li>
-                        <li>خريطة التهيئة</li>
-                        <li>خريطة الاستثمار</li>
-                        <li>خريطة البنيات التحتية</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-home"></i>
-                    </div>
-                    <h3>منصّات عرض العقارات</h3>
-                    <ul>
-                        <li>قطع أراضي، فيلات وشقق</li>
-                        <li>بيانات المالك</li>
-                        <li>محيط الموقع</li>
-                        <li>تكامل مع خدمات خارجية</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Clients Section -->
-    <section id="clients" class="clients">
-        <div class="container">
-            <h2 class="section-title">الفئات المستهدفة</h2>
-            <div class="clients-grid">
-                <div class="client-item"><i class="fas fa-building"></i> المجالس الجهوية للسياحة</div>
-                <div class="client-item"><i class="fas fa-city"></i> الجماعات الترابية</div>
-                <div class="client-item"><i class="fas fa-chart-line"></i> وكالات التنمية</div>
-                <div class="client-item"><i class="fas fa-hard-hat"></i> مكاتب الدراسات الهندسية</div>
-                <div class="client-item"><i class="fas fa-bus"></i> شركات النقل الحضري</div>
-                <div class="client-item"><i class="fas fa-key"></i> شركات العقار</div>
-                <div class="client-item"><i class="fas fa-university"></i> الجامعات ومراكز البحث</div>
-                <div class="client-item"><i class="fas fa-briefcase"></i> المقاولات الصغرى والمتوسطة</div>
-                <div class="client-item"><i class="fas fa-hotel"></i> الفنادق ومؤسسات السياحة</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">تواصل معي</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-user"></i>
-                        <div>
-                            <h4>الاسم</h4>
-                            <p>Ayoub Daouiri</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-briefcase"></i>
-                        <div>
-                            <h4>التخصص</h4>
-                            <p>WebGIS – Cartography – Geospatial Development</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <h4>الإيميل</h4>
-                            <p>contact@example.com</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <h4>الهاتف</h4>
-                            <p>+212 XXX XXX XXX</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-globe"></i>
-                        <div>
-                            <h4>الموقع الإلكتروني</h4>
-                            <p><a href="https://www.cartomaroc.com" target="_blank">www.cartomaroc.com</a></p>
-                        </div>
-                    </div>
-                    <div class="social-links">
-                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <input type="text" placeholder="الاسم الكامل" required="">
-                        <input type="email" placeholder="البريد الإلكتروني" required="">
-                        <input type="text" placeholder="الموضوع" required="">
-                        <textarea rows="5" placeholder="رسالتك..." required=""></textarea>
-                        <button type="submit" class="btn btn-primary">إرسال الرسالة</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>© 2025 Ayoub Daouiri - WebGIS Developer. جميع الحقوق محفوظة.</p>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
-
-
-<script>// Mobile Navigation
-const burger = document.querySelector('.burger');
-const nav = document.querySelector('.nav-links');
-const navLinks = document.querySelectorAll('.nav-links li');
-
-burger.addEventListener('click', () => {
-    nav.classList.toggle('active');
-    
-    // Burger Animation
-    burger.classList.toggle('toggle');
-});
-
-// Close menu when clicking on link
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        nav.classList.remove('active');
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.add('open');
+      overlay.classList.add('active');
     });
-});
 
-// Smooth Scrolling
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+    closeBtn.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    });
+
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    });
+
+    const map = new ol.Map({
+      target: 'map',
+      layers: [new ol.layer.Tile({ source: new ol.source.OSM() })],
+      view: new ol.View({
+        center: ol.proj.fromLonLat([-6.83255, 34.020882]),
+        zoom: 13
+      })
+    });
+
+    const touristSource = new ol.source.Vector({
+      url: 'https://raw.githubusercontent.com/Ayoub-WebGis9/CartoMaroc/main/TouristRabat.geojson',
+      format: new ol.format.GeoJSON()
+    });
+
+    const busSource = new ol.source.Vector({
+      url: 'https://raw.githubusercontent.com/Ayoub-WebGis9/CartoMaroc/main/Line-Stad-Rabat.geojson',
+      format: new ol.format.GeoJSON()
+    });
+
+    const typeStyles = {};
+    const lineStyles = {};
+    const visibleTypes = new Set();
+    const visibleLines = new Set();
+    let selectedBusFeature = null;
+
+    function getProp(f, keys) {
+      for (const k of keys) {
+        const v = f.get(k);
+        if (v) return v;
+      }
+      return '';
+    }
+
+    const touristLayer = new ol.layer.Vector({
+      source: touristSource,
+      style: f => {
+        const rawType = getProp(f, ['TYPE', 'Type', 'type']).trim();
+        if (!rawType) return null;
+        if (!visibleTypes.has(rawType)) return null;
+        const t = rawType.toLowerCase();
+        if (t === 'stade') {
+          return new ol.style.Style({
+            text: new ol.style.Text({ text: '🏟️', font: '28px sans-serif' })
+          });
         }
+        if (t === 'gare') {
+          return new ol.style.Style({
+            text: new ol.style.Text({ text: '🚉', font: '28px sans-serif' })
+          });
+        }
+        if (t === 'ecotourism') {
+          return new ol.style.Style({
+            text: new ol.style.Text({ text: '🌳', font: '28px sans-serif' })
+          });
+        }
+        if (t === 'cultural tourism') {
+          return new ol.style.Style({
+            text: new ol.style.Text({ text: '🏛️', font: '28px sans-serif' })
+          });
+        }
+        if (typeStyles[rawType]) {
+          return typeStyles[rawType].style;
+        }
+        return new ol.style.Style({
+          image: new ol.style.Circle({
+            radius: 8,
+            fill: new ol.style.Fill({ color: '#6c757d' }),
+            stroke: new ol.style.Stroke({ color: 'white', width: 2 })
+          })
+        });
+      }
     });
-});
+    map.addLayer(touristLayer);
 
-// Navbar Background on Scroll
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 5px 30px rgba(0,0,0,0.1)';
-    } else {
-        navbar.style.background = '#ffffff';
-        navbar.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
+    touristSource.on('change', () => {
+      const feats = touristSource.getFeatures();
+      if (feats.length === 0) return;
+      const types = [...new Set(feats.map(f => getProp(f, ['TYPE', 'Type', 'type']).trim()).filter(Boolean))];
+      if (Object.keys(typeStyles).length === 0) {
+        types.sort().forEach((type, i) => {
+          const color = `hsl(${(i * 360) / types.length}, 70%, 50%)`;
+          typeStyles[type] = {
+            style: new ol.style.Style({
+              image: new ol.style.Circle({
+                radius: 9,
+                fill: new ol.style.Fill({ color }),
+                stroke: new ol.style.Stroke({ color: 'white', width: 3 })
+              })
+            }),
+            color
+          };
+          visibleTypes.add(type);
+        });
+        buildTypeLegend(types);
+        touristLayer.changed();
+      }
+    });
+
+    function buildTypeLegend(types) {
+      const container = document.getElementById('legend-types');
+      container.innerHTML = '';
+      types.forEach(type => {
+        const item = document.createElement('div');
+        item.className = 'legend-item';
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = true;
+        checkbox.id = 'type_' + type.replace(/\s+/g, '_');
+        
+        let icon = '';
+        const t = type.toLowerCase();
+        if (t === 'stade') icon = '<span class="legend-icon">🏟️</span>';
+        else if (t === 'gare') icon = '<span class="legend-icon">🚉</span>';
+        else if (t === 'ecotourism') icon = '<span class="legend-icon">🌳</span>';
+        else if (t === 'cultural tourism') icon = '<span class="legend-icon">🏛️</span>';
+        else icon = `<span class="legend-color" style="background:${typeStyles[type].color}"></span>`;
+        
+        const label = document.createElement('span');
+        label.className = 'legend-label';
+        label.textContent = type;
+        
+        item.appendChild(checkbox);
+        item.innerHTML += icon;
+        item.appendChild(label);
+        container.appendChild(item);
+        
+        item.addEventListener('click', (e) => {
+          if (e.target === checkbox) return;
+          checkbox.checked = !checkbox.checked;
+          checkbox.dispatchEvent(new Event('change'));
+        });
+        
+        checkbox.addEventListener('change', () => {
+          if (checkbox.checked) {
+            visibleTypes.add(type);
+          } else {
+            visibleTypes.delete(type);
+          }
+          touristLayer.changed();
+        });
+      });
     }
-});
 
-// Scroll Animation for Cards
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+    const busLayer = new ol.layer.Vector({
+      source: busSource,
+      style: feature => {
+        const l = getProp(feature, ['from_ar', 'Line', 'line']).trim();
+        if (!visibleLines.has(l)) return null;
+        if (feature === selectedBusFeature) {
+          const baseWidth = parseFloat(document.getElementById('lineThickness').value);
+          return [
+            new ol.style.Style({
+              stroke: new ol.style.Stroke({ color: 'white', width: baseWidth + 6 })
+            }),
+            new ol.style.Style({
+              stroke: new ol.style.Stroke({ color: 'yellow', width: baseWidth + 6 })
+            })
+          ];
         }
+        return lineStyles[l] ? lineStyles[l].style : null;
+      }
     });
-}, observerOptions);
+    map.addLayer(busLayer);
 
-// Observe all cards
-document.querySelectorAll('.skill-category, .project-card, .service-card').forEach(card => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(30px)';
-    card.style.transition = 'all 0.6s ease';
-    observer.observe(card);
-});
-
-// Form Submission
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('شكراً لتواصلك معنا! سنرد عليك في أقرب وقت ممكن.');
-        contactForm.reset();
-    });
-}
-
-// Counter Animation for Statistics (Optional Enhancement)
-function animateCounter(element, target) {
-    let current = 0;
-    const increment = target / 100;
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            element.textContent = target;
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(current);
-        }
-    }, 20);
-}
-
-// Active Nav Link on Scroll
-window.addEventListener('scroll', () => {
-    let current = '';
-    const sections = document.querySelectorAll('section');
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (scrollY >= (sectionTop - 200)) {
-            current = section.getAttribute('id');
-        }
+    busSource.on('change', () => {
+      const feats = busSource.getFeatures();
+      if (feats.length === 0) return;
+      const lines = [...new Set(feats.map(f => getProp(f, ['from_ar', 'Line', 'line']).trim()).filter(Boolean))];
+      if (Object.keys(lineStyles).length === 0) {
+        lines.sort().forEach((line, i) => {
+          const color = `hsl(${(i * 360) / lines.length}, 75%, 45%)`;
+          lineStyles[line] = {
+            style: new ol.style.Style({
+              stroke: new ol.style.Stroke({ color, width: 3 })
+            }),
+            color
+          };
+          visibleLines.add(line);
+        });
+        buildLineLegend(lines);
+        busLayer.changed();
+      }
     });
 
-    navLinks.forEach(li => {
-        const link = li.querySelector('a');
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
+    function buildLineLegend(lines) {
+      const container = document.getElementById('legend-lines');
+      container.innerHTML = '';
+      lines.forEach(line => {
+        const item = document.createElement('div');
+        item.className = 'legend-item';
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = true;
+        checkbox.id = 'line_' + line.replace(/\s+/g, '_');
+        
+        const colorBox = document.createElement('span');
+        colorBox.className = 'legend-color';
+        colorBox.style.background = lineStyles[line].color;
+        
+        const label = document.createElement('span');
+        label.className = 'legend-label';
+        label.textContent = line;
+        
+        item.appendChild(checkbox);
+        item.appendChild(colorBox);
+        item.appendChild(label);
+        container.appendChild(item);
+        
+        item.addEventListener('click', (e) => {
+          if (e.target === checkbox) return;
+          checkbox.checked = !checkbox.checked;
+          checkbox.dispatchEvent(new Event('change'));
+        });
+        
+        checkbox.addEventListener('change', () => {
+          if (checkbox.checked) {
+            visibleLines.add(line);
+          } else {
+            visibleLines.delete(line);
+          }
+          busLayer.changed();
+        });
+      });
+      
+      document.getElementById('lineThickness').addEventListener('input', e => {
+        document.getElementById('thVal').textContent = e.target.value;
+        Object.values(lineStyles).forEach(s => {
+          s.style.getStroke().setWidth(+e.target.value);
+        });
+        busLayer.changed();
+      });
+    }
+
+    const popupEl = document.getElementById('popup');
+    const popupOverlay = new ol.Overlay({ element: popupEl, autoPan: { animation: { duration: 250 } } });
+    map.addOverlay(popupOverlay);
+
+    map.on('singleclick', evt => {
+      let clickedOnBus = false;
+      const allFeatures = [];
+      map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
+        allFeatures.push({ feature, layer });
+        if (layer === busLayer) clickedOnBus = true;
+      });
+
+      if (!clickedOnBus && selectedBusFeature) {
+        selectedBusFeature = null;
+        busLayer.changed();
+      }
+
+      if (allFeatures.length === 0) {
+        popupEl.style.display = 'none';
+        return;
+      }
+
+      const busFeatures = allFeatures.filter(f => f.layer === busLayer);
+      const touristFeatures = allFeatures.filter(f => f.layer === touristLayer);
+
+      if (busFeatures.length > 1) {
+        let html = `<div class="popup-header">🚌 Choisir une ligne</div><div class="popup-content">`;
+        busFeatures.forEach((item, idx) => {
+          const lineName = getProp(item.feature, ['from_ar', 'Line', 'line']) || `Ligne ${idx + 1}`;
+          const lineColor = lineStyles[lineName] ? lineStyles[lineName].color : '#667eea';
+          html += `
+            <div class="bus-line-item" onclick="showBusLineDetails('${lineName}', ${evt.coordinate[0]}, ${evt.coordinate[1]})">
+              <span style="font-size:20px;">🚌</span>
+              <div class="bus-line-color" style="background:${lineColor}"></div>
+              <span style="flex:1">${lineName}</span>
+              <span style="color:#667eea">→</span>
+            </div>`;
+        });
+        html += `</div>`;
+        popupEl.innerHTML = html;
+        popupEl.style.display = 'block';
+        popupOverlay.setPosition(evt.coordinate);
+        return;
+      }
+
+      if (busFeatures.length === 1) {
+        const clickedFeature = busFeatures[0].feature;
+        if (selectedBusFeature) selectedBusFeature = null;
+        selectedBusFeature = clickedFeature;
+        busLayer.changed();
+        const lineName = getProp(clickedFeature, ['from_ar', 'Line', 'line']) || 'Ligne de bus';
+        const lineColor = lineStyles[lineName] ? lineStyles[lineName].color : '#667eea';
+        popupEl.innerHTML = `
+          <div class="popup-header">
+            🚌 ${lineName}
+          </div>
+          <div class="popup-content">
+            <div class="popup-item">
+              <div class="popup-label">Couleur de la ligne</div>
+              <div class="bus-line-color" style="background:${lineColor}; width:100%; height:10px;"></div>
+            </div>
+          </div>`;
+        popupEl.style.display = 'block';
+        popupOverlay.setPosition(evt.coordinate);
+        return;
+      }
+
+      if (touristFeatures.length > 0) {
+        const feature = touristFeatures[0].feature;
+        const props = feature.getProperties();
+        const name = getProp(feature, ['Name', 'name', 'NAME']) || 'Site touristique';
+        let html = `<div class="popup-header">📍 ${name}</div><div class="popup-content">`;
+        for (const k in props) {
+          if (k !== 'geometry' && k !== 'Name' && k !== 'name' && k !== 'NAME') {
+            html += `<div class="popup-item"><div class="popup-label">${k}</div><div class="popup-value">${props[k]}</div></div>`;
+          }
         }
+        html += `</div><div class="popup-footer">@CartoMaroc</div>`;
+        popupEl.innerHTML = html;
+        popupEl.style.display = 'block';
+        popupOverlay.setPosition(evt.coordinate);
+      }
     });
-});
-</script></body></html>
+
+    window.showBusLineDetails = function(lineName, x, y) {
+      const features = busSource.getFeatures();
+      const targetFeature = features.find(f => getProp(f, ['from_ar', 'Line', 'line']) === lineName);
+      if (selectedBusFeature) selectedBusFeature = null;
+      if (targetFeature) {
+        selectedBusFeature = targetFeature;
+        busLayer.changed();
+      }
+      const lineColor = lineStyles[lineName] ? lineStyles[lineName].color : '#667eea';
+      popupEl.innerHTML = `
+        <div class="popup-header">
+          🚌 ${lineName}
+        </div>
+        <div class="popup-content">
+          <div class="popup-item">
+            <div class="popup-label">Couleur de la ligne</div>
+            <div class="bus-line-color" style="background:${lineColor}; width:100%; height:10px;"></div>
+          </div>
+        </div>`;
+      popupEl.style.display = 'block';
+      popupOverlay.setPosition([x, y]);
+    };
+
+    // ========================================
+    // 🔥 GEOLOCATION IMPROVED CODE
+    // ========================================
+    let geolocationLayer = null;
+    let geolocation = null;
+
+    function setupGeolocation() {
+      geolocation = new ol.Geolocation({
+        trackingOptions: {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        },
+        projection: map.getView().getProjection()
+      });
+
+      const positionFeature = new ol.Feature();
+      positionFeature.setStyle(new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: 10,
+          fill: new ol.style.Fill({ color: '#3399CC' }),
+          stroke: new ol.style.Stroke({ color: '#fff', width: 3 })
+        })
+      }));
+
+      const accuracyFeature = new ol.Feature();
+      accuracyFeature.setStyle(new ol.style.Style({
+        fill: new ol.style.Fill({ color: 'rgba(51, 153, 204, 0.2)' }),
+        stroke: new ol.style.Stroke({ color: '#3399CC', width: 2 })
+      }));
+
+      geolocation.on('change:position', function() {
+        const coordinates = geolocation.getPosition();
+        if (coordinates) {
+          positionFeature.setGeometry(new ol.geom.Point(coordinates));
+          map.getView().animate({ 
+            center: coordinates, 
+            zoom: 17,
+            duration: 1000 
+          });
+          showToast('✅ تم تحديد موقعك');
+        }
+      });
+
+      geolocation.on('change:accuracyGeometry', function() {
+        const geometry = geolocation.getAccuracyGeometry();
+        if (geometry) {
+          accuracyFeature.setGeometry(geometry);
+        }
+      });
+
+      geolocation.on('error', function(error) {
+        let message = '';
+        switch(error.code) {
+          case 1:
+            message = '❌ الرجاء السماح بالوصول للموقع في إعدادات المتصفح';
+            break;
+          case 2:
+            message = '📡 لا يمكن تحديد الموقع. تأكد من تفعيل GPS';
+            break;
+          case 3:
+            message = '⏱️ انتهت المهلة. حاول مرة أخرى';
+            break;
+          default:
+            message = '❌ خطأ في تحديد الموقع';
+        }
+        showToast(message);
+        geolocation.setTracking(false);
+        document.getElementById('locateBtn').classList.remove('active');
+      });
+
+      geolocationLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: [accuracyFeature, positionFeature]
+        }),
+        zIndex: 1000
+      });
+      
+      map.addLayer(geolocationLayer);
+    }
+
+    setupGeolocation();
+
+    document.getElementById('locateBtn').addEventListener('click', () => {
+      const btn = document.getElementById('locateBtn');
+      
+      if (!geolocation.getTracking()) {
+        showToast('🔍 جاري تحديد موقعك...');
+        geolocation.setTracking(true);
+        btn.classList.add('active');
+      } else {
+        geolocation.setTracking(false);
+        btn.classList.remove('active');
+        showToast('تم إيقاف التتبع');
+      }
+    });
+
+    // ========================================
+    // PIN BUTTON
+    // ========================================
+    let addingPin = false;
+    document.getElementById('pinBtn').addEventListener('click', () => {
+      addingPin = !addingPin;
+      document.getElementById('pinBtn').classList.toggle('active');
+      showToast(addingPin ? 'Cliquez sur la carte' : '');
+    });
+
+    map.on('click', evt => {
+      if (!addingPin) return;
+      addingPin = false;
+      document.getElementById('pinBtn').classList.remove('active');
+      const marker = new ol.Feature(new ol.geom.Point(evt.coordinate));
+      marker.setStyle(new ol.style.Style({
+        image: new ol.style.Icon({
+          src: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="32" height="32"%3E%3Ctext y="28" font-size="28"%3E📌%3C/text%3E%3C/svg%3E',
+          scale: 1
+        })
+      }));
+      new ol.layer.Vector({ source: new ol.source.Vector({ features: [marker] }) }).setMap(map);
+      showToast('Épingle ajoutée');
+    });
+
+    // ========================================
+    // NEAREST BUTTON
+    // ========================================
+    document.getElementById('nearestBtn').addEventListener('click', () => {
+      const sheet = document.getElementById('bottomSheet');
+      const content = document.getElementById('sheetContent');
+      sheet.classList.add('open');
+      content.innerHTML = '';
+      touristSource.getFeatures().slice(0, 5).forEach(f => {
+        const name = getProp(f, ['Name', 'name', 'NAME']) || 'Site';
+        const type = getProp(f, ['TYPE', 'Type', 'type']) || '';
+        const card = document.createElement('div');
+        card.className = 'place-card';
+        card.innerHTML = `<div class="place-icon">📍</div>
+          <div class="place-info">
+            <div class="place-name">${name}</div>
+            <div class="place-type">${type}</div>
+          </div>`;
+        card.addEventListener('click', () => {
+          map.getView().animate({ center: f.getGeometry().getCoordinates(), zoom: 16 });
+          sheet.classList.remove('open');
+        });
+        content.appendChild(card);
+      });
+    });
+
+    document.getElementById('sheetClose').addEventListener('click', () => {
+      document.getElementById('bottomSheet').classList.remove('open');
+    });
+
+    // ========================================
+    // SEARCH
+    // ========================================
+    document.getElementById('searchBtn').addEventListener('click', () => {
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      if (!q) return;
+      const found = touristSource.getFeatures().find(f => {
+        const n = getProp(f, ['Name', 'name', 'NAME']).toLowerCase();
+        return n.includes(q);
+      });
+      if (found) {
+        map.getView().animate({ center: found.getGeometry().getCoordinates(), zoom: 18 });
+      } else {
+        showToast('Aucun résultat trouvé');
+      }
+    });
+  </script>
+</body>
+</html>
