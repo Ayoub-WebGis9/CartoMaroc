@@ -1,1157 +1,1231 @@
 <!DOCTYPE html>
-<html lang="en" class=""><head><script>window.livecodes = window.livecodes || {};</script><title>Untitled Project</title><meta name="title" content="Untitled Project"><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><style id="__livecodes_styles__">@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --primary-color: #2c3e50;
-    --secondary-color: #3498db;
-    --accent-color: #e74c3c;
-    --text-color: #333;
-    --light-bg: #f8f9fa;
-    --white: #ffffff;
-    --shadow: 0 5px 20px rgba(0,0,0,0.1);
-    --transition: all 0.3s ease;
-}
-
-body {
-    font-family: 'Cairo', sans-serif;
-    line-height: 1.6;
-    color: var(--text-color);
-    overflow-x: hidden;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Navbar */
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: var(--white);
-    box-shadow: var(--shadow);
-    z-index: 1000;
-    padding: 1rem 0;
-}
-
-.navbar .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
-.logo i {
-    color: var(--secondary-color);
-}
-
-.nav-links {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 600;
-    transition: var(--transition);
-    position: relative;
-}
-
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    right: 0;
-    width: 0;
-    height: 2px;
-    background: var(--secondary-color);
-    transition: var(--transition);
-}
-
-.nav-links a:hover::after {
-    width: 100%;
-}
-
-.nav-links a:hover {
-    color: var(--secondary-color);
-}
-
-.burger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.burger div {
-    width: 25px;
-    height: 3px;
-    background: var(--primary-color);
-    margin: 5px;
-    transition: var(--transition);
-}
-
-/* Hero Section */
-.hero {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: var(--white);
-    overflow: hidden;
-}
-
-.hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
-    background-size: cover;
-    background-position: bottom;
-    opacity: 0.3;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    padding: 2rem;
-}
-
-.hero h1 {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    font-weight: 900;
-}
-
-.hero h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    font-weight: 600;
-}
-
-.hero p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.btn {
-    padding: 1rem 2rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: var(--transition);
-    display: inline-block;
-}
-
-.btn-primary {
-    background: var(--white);
-    color: var(--primary-color);
-}
-
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: var(--white);
-    border: 2px solid var(--white);
-}
-
-.btn-secondary:hover {
-    background: var(--white);
-    color: var(--primary-color);
-}
-
-/* Animations */
-.fade-in {
-    animation: fadeIn 1s ease-in;
-}
-
-.fade-in-delay {
-    animation: fadeIn 1s ease-in 0.3s both;
-}
-
-.fade-in-delay-2 {
-    animation: fadeIn 1s ease-in 0.6s both;
-}
-
-.fade-in-delay-3 {
-    animation: fadeIn 1s ease-in 0.9s both;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Section Title */
-.section-title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    color: var(--primary-color);
-    position: relative;
-    padding-bottom: 1rem;
-}
-
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 50%;
-    transform: translateX(50%);
-    width: 80px;
-    height: 4px;
-    background: var(--secondary-color);
-}
-
-/* About Section */
-.about {
-    padding: 5rem 0;
-    background: var(--white);
-}
-
-.about-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 3rem;
-    align-items: center;
-}
-
-.about-text p {
-    margin-bottom: 1.5rem;
-    font-size: 1.1rem;
-    line-height: 1.8;
-}
-
-.about-icon {
-    text-align: center;
-}
-
-.about-icon i {
-    font-size: 10rem;
-    color: var(--secondary-color);
-    opacity: 0.2;
-}
-
-/* Skills Section */
-.skills {
-    padding: 5rem 0;
-    background: var(--light-bg);
-}
-
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-}
-
-.skill-category {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-}
-
-.skill-category:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-}
-
-.skill-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.skill-header i {
-    font-size: 2.5rem;
-    color: var(--secondary-color);
-}
-
-.skill-header h3 {
-    color: var(--primary-color);
-    font-size: 1.3rem;
-}
-
-.skill-category ul {
-    list-style: none;
-}
-
-.skill-category li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #eee;
-    transition: var(--transition);
-}
-
-.skill-category li:last-child {
-    border-bottom: none;
-}
-
-.skill-category li:hover {
-    padding-right: 10px;
-    color: var(--secondary-color);
-}
-
-/* Projects Section */
-.projects {
-    padding: 5rem 0;
-    background: var(--white);
-}
-
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.project-card {
-    background: var(--white);
-    border-radius: 15px;
-    padding: 2rem;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    border: 2px solid transparent;
-}
-
-.project-card:hover {
-    transform: translateY(-10px);
-    border-color: var(--secondary-color);
-    box-shadow: 0 15px 40px rgba(52, 152, 219, 0.2);
-}
-
-.project-icon {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, var(--secondary-color), #2980b9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-}
-
-.project-icon i {
-    font-size: 2rem;
-    color: var(--white);
-}
-
-.project-card h3 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
-}
-
-.project-card ul {
-    list-style: none;
-    margin-bottom: 1.5rem;
-}
-
-.project-card li {
-    padding: 0.5rem 0;
-    padding-right: 1.5rem;
-    position: relative;
-}
-
-.project-card li::before {
-    content: '✓';
-    position: absolute;
-    right: 0;
-    color: var(--secondary-color);
-    font-weight: bold;
-}
-
-.project-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--secondary-color);
-    text-decoration: none;
-    font-weight: 600;
-    transition: var(--transition);
-}
-
-.project-link:hover {
-    gap: 1rem;
-}
-
-/* Services Section */
-.services {
-    padding: 5rem 0;
-    background: var(--light-bg);
-}
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-}
-
-.service-card {
-    background: var(--white);
-    padding: 2.5rem;
-    border-radius: 15px;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    text-align: center;
-}
-
-.service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-}
-
-.service-icon {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, var(--accent-color), #c0392b);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-}
-
-.service-icon i {
-    font-size: 2.5rem;
-    color: var(--white);
-}
-
-.service-card h3 {
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    font-size: 1.3rem;
-}
-
-.service-card ul {
-    list-style: none;
-    text-align: right;
-}
-
-.service-card li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #eee;
-}
-
-.service-card li:last-child {
-    border-bottom: none;
-}
-
-/* Clients Section */
-.clients {
-    padding: 5rem 0;
-    background: var(--white);
-}
-
-.clients-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-}
-
-.client-item {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: var(--white);
-    padding: 1.5rem;
-    border-radius: 10px;
-    text-align: center;
-    font-weight: 600;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.client-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-}
-
-.client-item i {
-    font-size: 1.5rem;
-}
-
-/* Contact Section */
-.contact {
-    padding: 5rem 0;
-    background: var(--light-bg);
-}
-
-.contact-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-}
-
-.contact-info {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.contact-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    background: var(--white);
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-}
-
-.contact-item i {
-    font-size: 1.5rem;
-    color: var(--secondary-color);
-    margin-top: 0.3rem;
-}
-
-.contact-item h4 {
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-}
-
-.contact-item p,
-.contact-item a {
-    color: var(--text-color);
-    text-decoration: none;
-}
-
-.social-links {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.social-links a {
-    width: 50px;
-    height: 50px;
-    background: var(--secondary-color);
-    color: var(--white);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    transition: var(--transition);
-}
-
-.social-links a:hover {
-    background: var(--primary-color);
-    transform: translateY(-5px);
-}
-
-.contact-form {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: var(--shadow);
-}
-
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border: 2px solid #eee;
-    border-radius: 8px;
-    font-family: 'Cairo', sans-serif;
-    transition: var(--transition);
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-    outline: none;
-    border-color: var(--secondary-color);
-}
-
-.contact-form button {
-    width: 100%;
-    padding: 1rem;
-    border: none;
-    cursor: pointer;
-    font-size: 1.1rem;
-}
-
-/* Footer */
-.footer {
-    background: var(--primary-color);
-    color: var(--white);
-    text-align: center;
-    padding: 2rem 0;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .burger {
-        display: flex;
-    }
-
-    .nav-links {
-        position: fixed;
-        left: -100%;
-        top: 70px;
-        flex-direction: column;
-        background: var(--white);
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow: var(--shadow);
-        padding: 2rem 0;
-    }
-
-    .nav-links.active {
-        left: 0;
-    }
-
-    .hero h1 {
-        font-size: 2.5rem;
-    }
-
-    .hero h2 {
-        font-size: 1.5rem;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-    }
-
-    .about-content {
-        grid-template-columns: 1fr;
-    }
-
-    .about-icon {
-        display: none;
-    }
-
-    .contact-content {
-        grid-template-columns: 1fr;
-    }
-
-    .skills-grid,
-    .projects-grid,
-    .services-grid {
-        grid-template-columns: 1fr;
-    }
-}
-</style><script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" async=""></script><script type="importmap">{
-  "imports": {}
-}</script></head><body>
-
-
+<html lang="fr">
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayoub Daouiri - WebGIS &amp; Geospatial Developer</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Carte Interactive de Tanger - CartoMaroc</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.2.1/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@v10.2.1/dist/ol.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: #f5f5f5;
+        }
+        
+        #map {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
 
+        /* ===== HEADER ===== */
+        .app-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <i class="fas fa-map-marked-alt"></i>
-                <span>AYOUB DAOUIRI</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#home">الرئيسية</a></li>
-                <li><a href="#about">نبذة</a></li>
-                <li><a href="#skills">المهارات</a></li>
-                <li><a href="#projects">الأعمال</a></li>
-                <li><a href="#services">الخدمات</a></li>
-                <li><a href="#contact">تواصل</a></li>
-            </ul>
-            <div class="burger">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
-            </div>
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .header-icon {
+            font-size: 22px;
+        }
+
+        .menu-btn, .link-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 22px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .menu-btn:active, .link-btn:active {
+            transform: scale(0.9);
+            background: rgba(255,255,255,0.3);
+        }
+        
+        /* ===== LEGEND SIDEBAR ===== */
+        .legend-container {
+            position: fixed;
+            top: 0;
+            right: -340px;
+            width: 320px;
+            height: 100vh;
+            background: white;
+            box-shadow: -4px 0 20px rgba(0,0,0,0.3);
+            z-index: 2000;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+        
+        .legend-container.open {
+            right: 0;
+        }
+
+        .legend-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .close-legend-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 28px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .accordion-item {
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .accordion-header {
+            padding: 14px 15px;
+            background: #f8f9fa;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        
+        .accordion-header:active {
+            background: #e9ecef;
+        }
+        
+        .accordion-header::after {
+            content: '▼';
+            font-size: 12px;
+            transition: transform 0.3s;
+        }
+        
+        .accordion-header.active::after {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 15px;
+        }
+        
+        .accordion-content.active {
+            max-height: 600px;
+            padding: 12px 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            gap: 10px;
+        }
+        
+        .legend-item input[type="checkbox"] {
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+        }
+        
+        .legend-color {
+            width: 32px;
+            height: 5px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+        
+        .legend-circle {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .legend-text {
+            font-size: 14px;
+            flex-grow: 1;
+            color: #333;
+        }
+        
+        /* ===== SEARCH BAR ===== */
+        .search-container {
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            z-index: 999;
+        }
+        
+        #searchInput {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            font-size: 15px;
+            outline: none;
+            background: white;
+        }
+
+        #searchInput:focus {
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* ===== CONTROL BUTTONS ===== */
+        .controls-container {
+            position: absolute;
+            bottom: 80px;
+            left: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 999;
+        }
+        
+        .control-btn {
+            background: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            font-size: 22px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .control-btn:active {
+            transform: scale(0.9);
+        }
+        
+        .control-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+        }
+        
+        /* ===== WATERMARK ===== */
+        .watermark {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* ===== POPUP ===== */
+        .ol-popup {
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            padding: 0;
+            border-radius: 12px;
+            border: none;
+            bottom: 12px;
+            left: -50px;
+            min-width: 260px;
+            max-width: 320px;
+            z-index: 1001;
+            overflow: hidden;
+        }
+        
+        .ol-popup:after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 48px;
+            border: 10px solid transparent;
+            border-top-color: white;
+        }
+        
+        .ol-popup-closer {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            z-index: 10;
+            text-decoration: none;
+            background: rgba(255,255,255,0.9);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .ol-popup-closer:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .popup-content {
+            margin: 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .popup-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 15px 40px 15px 15px;
+            margin: 0;
+        }
+        
+        .popup-body {
+            padding: 12px 15px;
+        }
+        
+        .popup-row {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .popup-row:last-child {
+            border-bottom: none;
+        }
+        
+        .popup-label {
+            font-weight: 600;
+            color: #667eea;
+            min-width: 80px;
+            font-size: 13px;
+        }
+        
+        .popup-value {
+            color: #333;
+            flex: 1;
+            font-size: 13px;
+        }
+        
+        /* ===== MULTI SELECT POPUP ===== */
+        .multi-select-popup {
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            padding: 12px;
+            border-radius: 12px;
+            z-index: 1002;
+            max-width: 280px;
+            min-width: 200px;
+        }
+        
+        .multi-select-title {
+            font-weight: bold;
+            font-size: 15px;
+            color: #667eea;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .multi-select-item {
+            padding: 10px 12px;
+            margin: 6px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .multi-select-item:active {
+            transform: scale(0.98);
+            background: #667eea;
+            color: white;
+        }
+
+        /* ===== OVERLAY ===== */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1500;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* ===== TOAST MESSAGE ===== */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.85);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            z-index: 3000;
+            display: none;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .toast.show {
+            display: block;
+            animation: fadeInOut 3s;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            10%, 90% { opacity: 1; }
+        }
+
+        /* ===== MOBILE OPTIMIZATIONS ===== */
+        @media (max-width: 768px) {
+            .header-title span:last-child {
+                display: none;
+            }
+
+            .search-container {
+                width: 85%;
+                max-width: none;
+            }
+
+            #searchInput {
+                font-size: 14px;
+                padding: 10px 16px;
+            }
+
+            .controls-container {
+                bottom: 70px;
+                left: 10px;
+                gap: 10px;
+            }
+
+            .control-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+
+            .legend-container {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="app-header">
+        <button class="menu-btn" onclick="toggleLegend()">☰</button>
+        <div class="header-title">
+            <span class="header-icon">🗺️</span>
+            <span>Carte Interactive - Tanger</span>
         </div>
-    </nav>
+        <a href="https://www.cartomaroc.com" target="_blank" class="link-btn">🌐</a>
+    </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1 class="fade-in">AYOUB DAOUIRI</h1>
-            <h2 class="fade-in-delay">WebGIS &amp; Geospatial Developer</h2>
-            <p class="fade-in-delay-2">متخصص في نظم المعلومات الجغرافية، الكارطوغرافيا الرقمية، وتطوير منصّات WebGIS التفاعلية</p>
-            <div class="hero-buttons fade-in-delay-3">
-                <a href="#projects" class="btn btn-primary">استكشف أعمالي</a>
-                <a href="#contact" class="btn btn-secondary">تواصل معي</a>
-            </div>
-        </div>
-        <div class="hero-background"></div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">نبذة مختصرة</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>أنا خبير في الجيوماتيك والكارطوغرافيا، أمتلك خبرة قوية في تحليل البيانات الجغرافية وتطوير واجهات خرائط تفاعلية تعتمد على تقنيات حديثة. أشتغل على بناء منصّات GIS عبر الويب تسمح للمستخدمين باستكشاف البيانات الجغرافية بطريقة سلسة، مرنة، وسريعة.</p>
-                    <p>أساعد المؤسسات في تحويل بياناتها إلى خرائط تفاعلية عملية وقابلة للاستعمال في السياحة، التهيئة الحضرية، البيئة، النقل، العقار، والتنمية الترابية.</p>
-                </div>
-                <div class="about-icon">
-                    <i class="fas fa-globe-americas"></i>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2 class="section-title">المهارات التقنية</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <i class="fas fa-map"></i>
-                        <h3>تقنيات WebGIS</h3>
-                    </div>
-                    <ul>
-                        <li>Leaflet.js</li>
-                        <li>OpenLayers</li>
-                        <li>MapLibre / Mapbox</li>
-                        <li>Cesium 3D</li>
-                        <li>GeoServer</li>
-                        <li>QGIS Server</li>
-                        <li>GitHub Pages Hosting</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <i class="fas fa-satellite"></i>
-                        <h3>المعالجة الجيومكانية</h3>
-                    </div>
-                    <ul>
-                        <li>QGIS</li>
-                        <li>ArcGIS</li>
-                        <li>Google Earth Engine</li>
-                        <li>GDAL / Raster Processing</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <i class="fas fa-code"></i>
-                        <h3>تطوير الويب</h3>
-                    </div>
-                    <ul>
-                        <li>HTML5 / CSS3 / JavaScript</li>
-                        <li>JSON / GeoJSON</li>
-                        <li>APIs</li>
-                        <li>Git – GitHub</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <i class="fas fa-compass"></i>
-                        <h3>كارتوغرافيا احترافية</h3>
-                    </div>
-                    <ul>
-                        <li>تصميم خرائط عالية الدقة</li>
-                        <li>اختيار الرموز والألوان</li>
-                        <li>إنشاء Legend و UI احترافية</li>
-                        <li>بناء StoryMaps</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2 class="section-title">أبرز الأعمال</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3>منصة خرائط تفاعلية للسياحة – طنجة</h3>
-                    <ul>
-                        <li>عرض المعالم السياحية</li>
-                        <li>خطوط ومحطات النقل الحضري</li>
-                        <li>تصميم واجهة عصرية وسريعة</li>
-                        <li>بناء طبقات متعددة (POI + Transport + Services)</li>
-                    </ul>
-                    <a href="#" class="project-link">عرض المشروع <i class="fas fa-arrow-left"></i></a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-chart-area"></i>
-                    </div>
-                    <h3>تطبيق WebGIS لاستخراج مقطع طبوغرافي Online</h3>
-                    <ul>
-                        <li>استخراج Profile لأي نقطة في العالم</li>
-                        <li>بناء خوارزمية معالجة الارتفاعات</li>
-                        <li>عرض Chart تفاعلي</li>
-                        <li>تحميل النتائج بصيغة PDF/PNG</li>
-                    </ul>
-                    <a href="#" class="project-link">عرض المشروع <i class="fas fa-arrow-left"></i></a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-city"></i>
-                    </div>
-                    <h3>منصة لإدارة المشاريع الجماعية Commune WebGIS</h3>
-                    <ul>
-                        <li>خريطة للمشاريع التنموية</li>
-                        <li>متابعة تقدم إنجاز المشاريع</li>
-                        <li>إضافة layers: الإنارة، الطرق، المساحات الخضراء</li>
-                        <li>نظام بحث متقدم داخل الخريطة</li>
-                    </ul>
-                    <a href="#" class="project-link">عرض المشروع <i class="fas fa-arrow-left"></i></a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <h3>خريطة عقارية WebGIS Real Estate</h3>
-                    <ul>
-                        <li>عرض الأراضي والقطع المتاحة</li>
-                        <li>إظهار معلومات الملكية</li>
-                        <li>حساب المساحات والمسافات</li>
-                        <li>واجهة تستجيب للهاتف</li>
-                    </ul>
-                    <a href="#" class="project-link">عرض المشروع <i class="fas fa-arrow-left"></i></a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <h3>لوحة تحليل بيئي – NDVI Web Dashboard</h3>
-                    <ul>
-                        <li>تحليل الغطاء النباتي مباشرة من الخريطة</li>
-                        <li>Graphs + Charts</li>
-                        <li>تفاعل سريع مع GeoTIFF</li>
-                        <li>واجهة Dashboard كاملة</li>
-                    </ul>
-                    <a href="#" class="project-link">عرض المشروع <i class="fas fa-arrow-left"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="services">
-        <div class="container">
-            <h2 class="section-title">الخدمات المقدمة</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h3>تطوير منصّات WebGIS كاملة</h3>
-                    <ul>
-                        <li>خرائط تفاعلية متعددة الطبقات</li>
-                        <li>تحليل مكاني عبر المتصفح</li>
-                        <li>إدارة البيانات الجغرافية Online</li>
-                        <li>تصميم واجهة كاملة UX/UI</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-map-marked"></i>
-                    </div>
-                    <h3>خرائط سياحية احترافية</h3>
-                    <ul>
-                        <li>معالم، فنادق، ومسارات</li>
-                        <li>نقل حضري</li>
-                        <li>صور ووصف تفصيلي</li>
-                        <li>زر تحديد الموقع الحالي</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                    <h3>تطوير أدوات جغرافية Online</h3>
-                    <ul>
-                        <li>مقطع طبوغرافي</li>
-                        <li>حساب المسافات والمساحات</li>
-                        <li>تحويل الإحداثيات</li>
-                        <li>استخراج بيانات الارتفاع DEM</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-landmark"></i>
-                    </div>
-                    <h3>حلول رقمية للجماعات الترابية</h3>
-                    <ul>
-                        <li>خريطة المشاريع</li>
-                        <li>خريطة التهيئة</li>
-                        <li>خريطة الاستثمار</li>
-                        <li>خريطة البنيات التحتية</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-home"></i>
-                    </div>
-                    <h3>منصّات عرض العقارات</h3>
-                    <ul>
-                        <li>قطع أراضي، فيلات وشقق</li>
-                        <li>بيانات المالك</li>
-                        <li>محيط الموقع</li>
-                        <li>تكامل مع خدمات خارجية</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Clients Section -->
-    <section id="clients" class="clients">
-        <div class="container">
-            <h2 class="section-title">الفئات المستهدفة</h2>
-            <div class="clients-grid">
-                <div class="client-item"><i class="fas fa-building"></i> المجالس الجهوية للسياحة</div>
-                <div class="client-item"><i class="fas fa-city"></i> الجماعات الترابية</div>
-                <div class="client-item"><i class="fas fa-chart-line"></i> وكالات التنمية</div>
-                <div class="client-item"><i class="fas fa-hard-hat"></i> مكاتب الدراسات الهندسية</div>
-                <div class="client-item"><i class="fas fa-bus"></i> شركات النقل الحضري</div>
-                <div class="client-item"><i class="fas fa-key"></i> شركات العقار</div>
-                <div class="client-item"><i class="fas fa-university"></i> الجامعات ومراكز البحث</div>
-                <div class="client-item"><i class="fas fa-briefcase"></i> المقاولات الصغرى والمتوسطة</div>
-                <div class="client-item"><i class="fas fa-hotel"></i> الفنادق ومؤسسات السياحة</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">تواصل معي</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-user"></i>
-                        <div>
-                            <h4>الاسم</h4>
-                            <p>Ayoub Daouiri</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-briefcase"></i>
-                        <div>
-                            <h4>التخصص</h4>
-                            <p>WebGIS – Cartography – Geospatial Development</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <h4>الإيميل</h4>
-                            <p>contact@example.com</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <h4>الهاتف</h4>
-                            <p>+212 XXX XXX XXX</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-globe"></i>
-                        <div>
-                            <h4>الموقع الإلكتروني</h4>
-                            <p><a href="https://www.cartomaroc.com" target="_blank">www.cartomaroc.com</a></p>
-                        </div>
-                    </div>
-                    <div class="social-links">
-                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <input type="text" placeholder="الاسم الكامل" required="">
-                        <input type="email" placeholder="البريد الإلكتروني" required="">
-                        <input type="text" placeholder="الموضوع" required="">
-                        <textarea rows="5" placeholder="رسالتك..." required=""></textarea>
-                        <button type="submit" class="btn btn-primary">إرسال الرسالة</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>© 2025 Ayoub Daouiri - WebGIS Developer. جميع الحقوق محفوظة.</p>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
-
-
-<script>// Mobile Navigation
-const burger = document.querySelector('.burger');
-const nav = document.querySelector('.nav-links');
-const navLinks = document.querySelectorAll('.nav-links li');
-
-burger.addEventListener('click', () => {
-    nav.classList.toggle('active');
+    <!-- MAP -->
+    <div id="map"></div>
     
-    // Burger Animation
-    burger.classList.toggle('toggle');
-});
+    <!-- LEGEND SIDEBAR -->
+    <div class="legend-container" id="legendContainer">
+        <div class="legend-header">
+            <span>📋 Légende</span>
+            <button class="close-legend-btn" onclick="toggleLegend()">×</button>
+        </div>
+        
+        <div class="accordion-item">
+            <div class="accordion-header active" onclick="toggleAccordion(this)">
+                <span>🏛️ Sites Touristiques</span>
+            </div>
+            <div class="accordion-content active" id="touristLegend"></div>
+        </div>
+        
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>🚏 Arrêts de Bus</span>
+            </div>
+            <div class="accordion-content" id="stopBusLegend"></div>
+        </div>
+        
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>🚌 Lignes de Bus</span>
+            </div>
+            <div class="accordion-content" id="lineBusLegend"></div>
+        </div>
+    </div>
 
-// Close menu when clicking on link
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        nav.classList.remove('active');
-    });
-});
+    <!-- OVERLAY -->
+    <div class="overlay" id="overlay" onclick="toggleLegend()"></div>
+    
+    <!-- SEARCH BAR -->
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="🔍 Rechercher un site...">
+    </div>
+    
+    <!-- CONTROL BUTTONS -->
+    <div class="controls-container">
+        <button class="control-btn" onclick="locateMe()" title="Me localiser">📍</button>
+        <button class="control-btn" id="markerBtn" onclick="toggleMarkerMode()" title="Placer un marqueur">📌</button>
+    </div>
+    
+    <!-- WATERMARK -->
+    <div class="watermark">@CartoMaroc</div>
 
-// Smooth Scrolling
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+    <!-- TOAST MESSAGE -->
+    <div class="toast" id="toast"></div>
+    
+    <!-- POPUP -->
+    <div id="popup" class="ol-popup" style="display: none;">
+        <a href="#" id="popup-closer" class="ol-popup-closer">×</a>
+        <div id="popup-content" class="popup-content"></div>
+    </div>
+
+    <script>
+        // ===== CONFIGURATION =====
+        const busLineColors = [
+            '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8',
+            '#F7DC6F', '#BB8FCE', '#85C1E2', '#F8B739', '#52B788',
+            '#E63946', '#A8DADC', '#457B9D', '#F4A261', '#E76F51',
+            '#2A9D8F', '#E9C46A', '#F4A460', '#264653', '#E07A5F'
+        ];
+        
+        const stopBusColors = {
+            'Primary': '#FF4444',
+            'Secondary': '#4444FF',
+            'primary': '#FF4444',
+            'secondary': '#4444FF',
+            'Primaire': '#FF4444',
+            'Secondaire': '#4444FF',
+            'Unknown': '#999999'
+        };
+        
+        const touristColors = {
+            'Agence Touristique': '#FF6B9D',
+            'Cultural Tourism': '#C44569',
+            'EcoTourism': '#2ECC71',
+            'Stade': '#3498DB',
+            'Gare': '#9B59B6',
+            'Airoport': '#E74C3C',
+            'Hotel': '#F39C12'
+        };
+        
+        const touristEmojis = {
+            'Agence Touristique': '🏨',
+            'Cultural Tourism': '🏰',
+            'EcoTourism': '🌳',
+            'Stade': '🏟️',
+            'Gare': '🚉',
+            'Airoport': '✈️',
+            'Hotel': '🔸'
+        };
+
+        // ===== TOAST FUNCTION =====
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+        
+        // ===== MAP INITIALIZATION =====
+        const map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.XYZ({
+                        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                        maxZoom: 19
+                    })
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([-5.8, 35.76]),
+                zoom: 12
+            })
+        });
+        
+        // ===== POPUP SETUP =====
+        const container = document.getElementById('popup');
+        const content = document.getElementById('popup-content');
+        const closer = document.getElementById('popup-closer');
+        
+        const overlay = new ol.Overlay({
+            element: container,
+            autoPan: {
+                animation: {
+                    duration: 250
+                }
+            }
+        });
+        map.addOverlay(overlay);
+        
+        closer.onclick = function() {
+            overlay.setPosition(undefined);
+            container.style.display = 'none';
+            closer.blur();
+            return false;
+        };
+        
+        // ===== VARIABLES =====
+        let busLineLayers = {};
+        let stopBusLayers = {};
+        let touristLayers = {};
+        let markerMode = false;
+        let markerLayer = null;
+        let selectedFeatures = new ol.Collection();
+        let multiSelectPopup = null;
+        let geolocation = null;
+        let geolocationLayer = null;
+        
+        // ===== GEOLOCATION SETUP (IMPROVED) =====
+        function setupGeolocation() {
+            geolocation = new ol.Geolocation({
+                trackingOptions: {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                },
+                projection: map.getView().getProjection()
+            });
+
+            const positionFeature = new ol.Feature();
+            positionFeature.setStyle(new ol.style.Style({
+                image: new ol.style.Circle({
+                    radius: 10,
+                    fill: new ol.style.Fill({ color: '#3399CC' }),
+                    stroke: new ol.style.Stroke({ color: '#fff', width: 3 })
+                })
+            }));
+
+            const accuracyFeature = new ol.Feature();
+            accuracyFeature.setStyle(new ol.style.Style({
+                fill: new ol.style.Fill({ color: 'rgba(51, 153, 204, 0.2)' }),
+                stroke: new ol.style.Stroke({ color: '#3399CC', width: 2 })
+            }));
+
+            geolocation.on('change:position', function() {
+                const coordinates = geolocation.getPosition();
+                if (coordinates) {
+                    positionFeature.setGeometry(new ol.geom.Point(coordinates));
+                    map.getView().animate({ 
+                        center: coordinates, 
+                        zoom: 16,
+                        duration: 1000 
+                    });
+                    showToast('✅ Localisation réussie');
+                }
+            });
+
+            geolocation.on('change:accuracyGeometry', function() {
+                const geometry = geolocation.getAccuracyGeometry();
+                if (geometry) {
+                    accuracyFeature.setGeometry(geometry);
+                }
+            });
+
+            geolocation.on('error', function(error) {
+                let message = '';
+                switch(error.code) {
+                    case 1:
+                        message = '❌ Accès refusé. Vérifiez les paramètres';
+                        break;
+                    case 2:
+                        message = '📡 Position indisponible';
+                        break;
+                    case 3:
+                        message = '⏱️ Délai d\'attente dépassé';
+                        break;
+                    default:
+                        message = '❌ Erreur de géolocalisation';
+                }
+                showToast(message);
+                geolocation.setTracking(false);
+            });
+
+            geolocationLayer = new ol.layer.Vector({
+                source: new ol.source.Vector({
+                    features: [accuracyFeature, positionFeature]
+                }),
+                zIndex: 1000
+            });
+            
+            map.addLayer(geolocationLayer);
+        }
+
+        setupGeolocation();
+        
+        // ===== SELECTION STYLE =====
+        const selectedStyle = new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: '#FFFF00',
+                width: 6
+            }),
+            image: new ol.style.Circle({
+                radius: 12,
+                fill: new ol.style.Fill({
+                    color: 'rgba(255, 255, 0, 0.6)'
+                }),
+                stroke: new ol.style.Stroke({
+                    color: '#FFFF00',
+                    width: 3
+                })
+            })
+        });
+        
+        const selectInteraction = new ol.interaction.Select({
+            condition: ol.events.condition.click,
+            features: selectedFeatures,
+            style: selectedStyle
+        });
+        map.addInteraction(selectInteraction);
+        
+        // ===== LOAD DATA =====
+        async function loadData() {
+            try {
+                showToast('⏳ Chargement des données...');
+                
+                const tourismResponse = await fetch('https://raw.githubusercontent.com/Ayoub-WebGis9/CartoMaroc/main/Tourism-Tanger.geojson');
+                const tourismData = await tourismResponse.json();
+                createTouristLayers(tourismData);
+                
+                const stopBusResponse = await fetch('https://raw.githubusercontent.com/Ayoub-WebGis9/CartoMaroc/main/StopBusTanger.geojson');
+                const stopBusData = await stopBusResponse.json();
+                createStopBusLayers(stopBusData);
+                
+                const lineBusResponse = await fetch('https://raw.githubusercontent.com/Ayoub-WebGis9/CartoMaroc/main/LineBusTanger1.geojson');
+                const lineBusData = await lineBusResponse.json();
+                createBusLineLayers(lineBusData);
+                
+                showToast('✅ Données chargées');
+                
+            } catch (error) {
+                console.error('Erreur:', error);
+                showToast('❌ Erreur de chargement');
+            }
+        }
+        
+        // ===== CREATE TOURIST LAYERS =====
+        function createTouristLayers(data) {
+            const types = {};
+            
+            data.features.forEach(feature => {
+                const type = feature.properties.TYPE || 'Autre';
+                if (!types[type]) types[type] = [];
+                types[type].push(feature);
+            });
+            
+            const legendDiv = document.getElementById('touristLegend');
+            
+            Object.keys(types).forEach(type => {
+                const features = types[type].map(f => 
+                    new ol.format.GeoJSON().readFeature(f, {
+                        featureProjection: 'EPSG:3857'
+                    })
+                );
+                
+                const vectorSource = new ol.source.Vector({ features });
+                
+                const layer = new ol.layer.Vector({
+                    source: vectorSource,
+                    style: createTouristStyle(type),
+                    visible: true
+                });
+                
+                layer.set('type', 'tourist');
+                layer.set('name', type);
+                map.addLayer(layer);
+                touristLayers[type] = layer;
+                
+                const legendItem = document.createElement('div');
+                legendItem.className = 'legend-item';
+                legendItem.innerHTML = `
+                    <input type="checkbox" checked onchange="toggleLayer('tourist', '${type}', this.checked)">
+                    <span style="font-size: 18px;">${touristEmojis[type] || '📍'}</span>
+                    <span class="legend-text">${type}</span>
+                `;
+                legendDiv.appendChild(legendItem);
             });
         }
-    });
-});
-
-// Navbar Background on Scroll
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 5px 30px rgba(0,0,0,0.1)';
-    } else {
-        navbar.style.background = '#ffffff';
-        navbar.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
-    }
-});
-
-// Scroll Animation for Cards
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+        
+        // ===== CREATE TOURIST STYLE =====
+        function createTouristStyle(type) {
+            const emoji = touristEmojis[type] || '📍';
+            const color = touristColors[type] || '#666666';
+            
+            return function(feature) {
+                if (type === 'Stade' || type === 'Gare' || type === 'Airoport') {
+                    return new ol.style.Style({
+                        text: new ol.style.Text({
+                            text: emoji,
+                            font: '26px sans-serif',
+                            offsetY: -12
+                        })
+                    });
+                }
+                
+                return new ol.style.Style({
+                    image: new ol.style.Circle({
+                        radius: 9,
+                        fill: new ol.style.Fill({ color: color }),
+                        stroke: new ol.style.Stroke({
+                            color: 'white',
+                            width: 3
+                        })
+                    })
+                });
+            };
         }
-    });
-}, observerOptions);
-
-// Observe all cards
-document.querySelectorAll('.skill-category, .project-card, .service-card').forEach(card => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(30px)';
-    card.style.transition = 'all 0.6s ease';
-    observer.observe(card);
-});
-
-// Form Submission
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('شكراً لتواصلك معنا! سنرد عليك في أقرب وقت ممكن.');
-        contactForm.reset();
-    });
-}
-
-// Counter Animation for Statistics (Optional Enhancement)
-function animateCounter(element, target) {
-    let current = 0;
-    const increment = target / 100;
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            element.textContent = target;
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(current);
+        
+        // ===== CREATE STOP BUS LAYERS =====
+        function createStopBusLayers(data) {
+            const types = {};
+            
+            data.features.forEach(feature => {
+                const type = feature.properties.Type || feature.properties.type || feature.properties.TYPE || 'Unknown';
+                if (!types[type]) types[type] = [];
+                types[type].push(feature);
+            });
+            
+            const legendDiv = document.getElementById('stopBusLegend');
+            
+            Object.keys(types).forEach(type => {
+                const features = types[type].map(f => 
+                    new ol.format.GeoJSON().readFeature(f, {
+                        featureProjection: 'EPSG:3857'
+                    })
+                );
+                
+                const vectorSource = new ol.source.Vector({ features });
+                const color = stopBusColors[type] || stopBusColors[type.toLowerCase()] || '#FF4444';
+                
+                const layer = new ol.layer.Vector({
+                    source: vectorSource,
+                    style: new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: 7,
+                            fill: new ol.style.Fill({ color: color }),
+                            stroke: new ol.style.Stroke({
+                                color: 'white',
+                                width: 2
+                            })
+                        })
+                    }),
+                    visible: false
+                });
+                
+                layer.set('type', 'stopBus');
+                layer.set('name', type);
+                map.addLayer(layer);
+                stopBusLayers[type] = layer;
+                
+                const legendItem = document.createElement('div');
+                legendItem.className = 'legend-item';
+                legendItem.innerHTML = `
+                    <input type="checkbox" onchange="toggleLayer('stopBus', '${type}', this.checked)">
+                    <span class="legend-circle" style="background: ${color};"></span>
+                    <span class="legend-text">${type}</span>
+                `;
+                legendDiv.appendChild(legendItem);
+            });
         }
-    }, 20);
-}
-
-// Active Nav Link on Scroll
-window.addEventListener('scroll', () => {
-    let current = '';
-    const sections = document.querySelectorAll('section');
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (scrollY >= (sectionTop - 200)) {
-            current = section.getAttribute('id');
+        
+        // ===== CREATE BUS LINE LAYERS =====
+        function createBusLineLayers(data) {
+            const lines = {};
+            
+            data.features.forEach(feature => {
+                const number = feature.properties.Number || 'Inconnu';
+                if (!lines[number]) lines[number] = [];
+                lines[number].push(feature);
+            });
+            
+            const legendDiv = document.getElementById('lineBusLegend');
+            let colorIndex = 0;
+            
+            Object.keys(lines).sort().forEach(number => {
+                const features = lines[number].map(f => 
+                    new ol.format.GeoJSON().readFeature(f, {
+                        featureProjection: 'EPSG:3857'
+                    })
+                );
+                
+                const vectorSource = new ol.source.Vector({ features });
+                const color = busLineColors[colorIndex % busLineColors.length];
+                colorIndex++;
+                
+                const layer = new ol.layer.Vector({
+                    source: vectorSource,
+                    style: new ol.style.Style({
+                        stroke: new ol.style.Stroke({
+                            color: color,
+                            width: 4
+                        })
+                    }),
+                    visible: false
+                });
+                
+                layer.set('type', 'busLine');
+                layer.set('name', number);
+                map.addLayer(layer);
+                busLineLayers[number] = layer;
+                
+                const legendItem = document.createElement('div');
+                legendItem.className = 'legend-item';
+                legendItem.innerHTML = `
+                    <input type="checkbox" onchange="toggleLayer('busLine', '${number}', this.checked)">
+                    <span class="legend-color" style="background: ${color};"></span>
+                    <span class="legend-text">Bus ${number}</span>
+                `;
+                legendDiv.appendChild(legendItem);
+            });
         }
-    });
-
-    navLinks.forEach(li => {
-        const link = li.querySelector('a');
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
+        
+        // ===== TOGGLE LAYER =====
+        function toggleLayer(category, name, visible) {
+            let layer;
+            if (category === 'tourist') layer = touristLayers[name];
+            else if (category === 'stopBus') layer = stopBusLayers[name];
+            else if (category === 'busLine') layer = busLineLayers[name];
+            
+            if (layer) layer.setVisible(visible);
         }
-    });
-});
-</script></body></html>
+        
+        // ===== TOGGLE ACCORDION =====
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const isActive = content.classList.contains('active');
+            
+            document.querySelectorAll('.accordion-content').forEach(c => {
+                c.classList.remove('active');
+            });
+            document.querySelectorAll('.accordion-header').forEach(h => {
+                h.classList.remove('active');
+            });
+            
+            if (!isActive) {
+                content.classList.add('active');
+                header.classList.add('active');
+            }
+        }
+        
+        // ===== TOGGLE LEGEND =====
+        function toggleLegend() {
+            const legend = document.getElementById('legendContainer');
+            const overlayEl = document.getElementById('overlay');
+            legend.classList.toggle('open');
+            overlayEl.classList.toggle('active');
+        }
+        
+        // ===== SEARCH FUNCTIONALITY =====
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            
+            if (searchTerm.length < 2) {
+                selectedFeatures.clear();
+                overlay.setPosition(undefined);
+                container.style.display = 'none';
+                return;
+            }
+            
+            const allLayers = [...Object.values(touristLayers), 
+                              ...Object.values(stopBusLayers), 
+                              ...Object.values(busLineLayers)];
+            
+            for (let layer of allLayers) {
+                const source = layer.getSource();
+                const features = source.getFeatures();
+                
+                for (let feature of features) {
+                    const props = feature.getProperties();
+                    const name = (props.name || props.Name || props.NAME || '').toLowerCase();
+                    
+                    if (name.includes(searchTerm)) {
+                        const geometry = feature.getGeometry();
+                        const coords = geometry.getType() === 'Point' ? 
+                            geometry.getCoordinates() : 
+                            geometry.getClosestPoint(map.getView().getCenter());
+                        
+                        selectedFeatures.clear();
+                        selectedFeatures.push(feature);
+                        showPopup(feature, coords);
+                        
+                        map.getView().animate({
+                            center: coords,
+                            zoom: 16,
+                            duration: 500
+                        });
+                        return;
+                    }
+                }
+            }
+        });
+        
+        // ===== MAP CLICK EVENT =====
+        map.on('click', function(evt) {
+            if (multiSelectPopup) {
+                document.body.removeChild(multiSelectPopup);
+                multiSelectPopup = null;
+            }
+            
+            if (markerMode) {
+                addMarker(evt.coordinate);
+                return;
+            }
+            
+            const features = [];
+            map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
+                features.push({feature: feature, layer: layer});
+            });
+            
+            if (features.length === 0) {
+                overlay.setPosition(undefined);
+                container.style.display = 'none';
+                selectedFeatures.clear();
+                return;
+            }
+            
+            const busLineFeatures = features.filter(f => {
+                const props = f.feature.getProperties();
+                return props.Number !== undefined;
+            });
+            
+            if (busLineFeatures.length > 1) {
+                showMultiSelectPopup(busLineFeatures, evt.pixel);
+                return;
+            }
+            
+            const feature = features[0].feature;
+            const geometry = feature.getGeometry();
+            let coords;
+            
+            if (geometry.getType() === 'Point') {
+                coords = geometry.getCoordinates();
+            } else if (geometry.getType() === 'LineString') {
+                coords = geometry.getClosestPoint(evt.coordinate);
+            } else if (geometry.getType() === 'MultiLineString') {
+                const lines = geometry.getLineStrings();
+                coords = lines[0].getClosestPoint(evt.coordinate);
+            } else {
+                coords = evt.coordinate;
+            }
+            
+            showPopup(feature, coords);
+        });
+        
+        // ===== SHOW MULTI SELECT POPUP =====
+        function showMultiSelectPopup(features, pixel) {
+            overlay.setPosition(undefined);
+            container.style.display = 'none';
+            
+            multiSelectPopup = document.createElement('div');
+            multiSelectPopup.className = 'multi-select-popup';
+            multiSelectPopup.style.left = pixel[0] + 'px';
+            multiSelectPopup.style.top = pixel[1] + 'px';
+            
+            const titleDiv = document.createElement('div');
+            titleDiv.className = 'multi-select-title';
+            titleDiv.textContent = '🚌 Choisir une ligne';
+            multiSelectPopup.appendChild(titleDiv);
+            
+            features.forEach(({feature, layer}) => {
+                const props = feature.getProperties();
+                const number = props.Number || 'Inconnu';
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'multi-select-item';
+                itemDiv.innerHTML = `<span>🚌</span><span>Bus ${number}</span>`;
+                itemDiv.onclick = function() {
+                    document.body.removeChild(multiSelectPopup);
+                    multiSelectPopup = null;
+                    
+                    const geometry = feature.getGeometry();
+                    let coords;
+                    if (geometry.getType() === 'LineString') {
+                        coords = geometry.getClosestPoint(map.getView().getCenter());
+                    } else if (geometry.getType() === 'MultiLineString') {
+                        const lines = geometry.getLineStrings();
+                        coords = lines[0].getClosestPoint(map.getView().getCenter());
+                    } else {
+                        coords = geometry.getCoordinates();
+                    }
+                    
+                    selectedFeatures.clear();
+                    selectedFeatures.push(feature);
+                    showPopup(feature, coords);
+                };
+                multiSelectPopup.appendChild(itemDiv);
+            });
+            
+            document.body.appendChild(multiSelectPopup);
+        }
+        
+        // ===== SHOW POPUP =====
+        function showPopup(feature, coordinate) {
+            const props = feature.getProperties();
+            const title = props.name || props.Name || props.NAME || 'Information';
+            
+            let html = `<div class="popup-title">${title}</div><div class="popup-body">`;
+            
+            for (let key in props) {
+                if (key !== 'geometry' && props[key] != null && props[key] !== '' && 
+                    key !== 'name' && key !== 'Name' && key !== 'NAME') {
+                    html += `<div class="popup-row">
+                        <span class="popup-label">${key}</span>
+                        <span class="popup-value">${props[key]}</span>
+                    </div>`;
+                }
+            }
+            
+            html += '</div>';
+            content.innerHTML = html;
+            container.style.display = 'block';
+            overlay.setPosition(coordinate);
+        }
+        
+        // ===== LOCATE ME =====
+        function locateMe() {
+            if (!geolocation) {
+                showToast('❌ Géolocalisation non disponible');
+                return;
+            }
+            
+            showToast('🔍 Recherche de votre position...');
+            geolocation.setTracking(true);
+            
+            setTimeout(() => {
+                geolocation.setTracking(false);
+            }, 5000);
+        }
+        
+        // ===== TOGGLE MARKER MODE =====
+        function toggleMarkerMode() {
+            markerMode = !markerMode;
+            const btn = document.getElementById('markerBtn');
+            btn.classList.toggle('active', markerMode);
+            
+            if (markerMode) {
+                map.getTargetElement().style.cursor = 'crosshair';
+                showToast('📌 Cliquez sur la carte');
+            } else {
+                map.getTargetElement().style.cursor = '';
+            }
+        }
+        
+        // ===== ADD MARKER =====
+        function addMarker(coordinate) {
+            if (markerLayer) {
+                map.removeLayer(markerLayer);
+            }
+            
+            const marker = new ol.Feature({
+                geometry: new ol.geom.Point(coordinate)
+            });
+            
+            const vectorSource = new ol.source.Vector({
+                features: [marker]
+            });
+            
+            markerLayer = new ol.layer.Vector({
+                source: vectorSource,
+                style: new ol.style.Style({
+                    text: new ol.style.Text({
+                        text: '📌',
+                        font: '32px sans-serif',
+                        offsetY: -16
+                    })
+                })
+            });
+            
+            map.addLayer(markerLayer);
+            
+            map.getView().animate({
+                center: coordinate,
+                zoom: 16,
+                duration: 500
+            });
+            
+            showToast('✅ Marqueur ajouté');
+            
+            if (markerMode) {
+                toggleMarkerMode();
+            }
+        }
+        
+        // ===== LOAD DATA ON START =====
+        loadData();
+    </script>
+</body>
+</html>
