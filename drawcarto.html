@@ -1,1157 +1,732 @@
 <!DOCTYPE html>
-<html lang="en" class=""><head><script>window.livecodes = window.livecodes || {};</script><title>Untitled Project</title><meta name="title" content="Untitled Project"><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><style id="__livecodes_styles__">@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CartoMaroc </title>
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+<!-- OpenLayers -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@latest/ol.css">
+<script src="https://cdn.jsdelivr.net/npm/ol@latest/dist/ol.js"></script>
 
-:root {
-    --primary-color: #2c3e50;
-    --secondary-color: #3498db;
-    --accent-color: #e74c3c;
-    --text-color: #333;
-    --light-bg: #f8f9fa;
-    --white: #ffffff;
-    --shadow: 0 5px 20px rgba(0,0,0,0.1);
-    --transition: all 0.3s ease;
-}
-
-body {
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  html, body { 
+    height: 100%; 
     font-family: 'Cairo', sans-serif;
-    line-height: 1.6;
-    color: var(--text-color);
-    overflow-x: hidden;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Navbar */
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: var(--white);
-    box-shadow: var(--shadow);
-    z-index: 1000;
-    padding: 1rem 0;
-}
-
-.navbar .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
-.logo i {
-    color: var(--secondary-color);
-}
-
-.nav-links {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 600;
-    transition: var(--transition);
-    position: relative;
-}
-
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    right: 0;
-    width: 0;
-    height: 2px;
-    background: var(--secondary-color);
-    transition: var(--transition);
-}
-
-.nav-links a:hover::after {
-    width: 100%;
-}
-
-.nav-links a:hover {
-    color: var(--secondary-color);
-}
-
-.burger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.burger div {
-    width: 25px;
-    height: 3px;
-    background: var(--primary-color);
-    margin: 5px;
-    transition: var(--transition);
-}
-
-/* Hero Section */
-.hero {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: var(--white);
     overflow: hidden;
-}
+  }
+  
+  #map { 
+    width: 100%; 
+    height: 100vh;
+    position: relative;
+  }
 
-.hero-background {
+  /* شريط العنوان */
+  #header {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
-    background-size: cover;
-    background-position: bottom;
-    opacity: 0.3;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    padding: 2rem;
-}
-
-.hero h1 {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    font-weight: 900;
-}
-
-.hero h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    font-weight: 600;
-}
-
-.hero p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.btn {
-    padding: 1rem 2rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: var(--transition);
-    display: inline-block;
-}
-
-.btn-primary {
-    background: var(--white);
-    color: var(--primary-color);
-}
-
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: var(--white);
-    border: 2px solid var(--white);
-}
-
-.btn-secondary:hover {
-    background: var(--white);
-    color: var(--primary-color);
-}
-
-/* Animations */
-.fade-in {
-    animation: fadeIn 1s ease-in;
-}
-
-.fade-in-delay {
-    animation: fadeIn 1s ease-in 0.3s both;
-}
-
-.fade-in-delay-2 {
-    animation: fadeIn 1s ease-in 0.6s both;
-}
-
-.fade-in-delay-3 {
-    animation: fadeIn 1s ease-in 0.9s both;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Section Title */
-.section-title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    color: var(--primary-color);
-    position: relative;
-    padding-bottom: 1rem;
-}
-
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 50%;
-    transform: translateX(50%);
-    width: 80px;
-    height: 4px;
-    background: var(--secondary-color);
-}
-
-/* About Section */
-.about {
-    padding: 5rem 0;
-    background: var(--white);
-}
-
-.about-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 3rem;
-    align-items: center;
-}
-
-.about-text p {
-    margin-bottom: 1.5rem;
-    font-size: 1.1rem;
-    line-height: 1.8;
-}
-
-.about-icon {
-    text-align: center;
-}
-
-.about-icon i {
-    font-size: 10rem;
-    color: var(--secondary-color);
-    opacity: 0.2;
-}
-
-/* Skills Section */
-.skills {
-    padding: 5rem 0;
-    background: var(--light-bg);
-}
-
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-}
-
-.skill-category {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-}
-
-.skill-category:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-}
-
-.skill-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.skill-header i {
-    font-size: 2.5rem;
-    color: var(--secondary-color);
-}
-
-.skill-header h3 {
-    color: var(--primary-color);
-    font-size: 1.3rem;
-}
-
-.skill-category ul {
-    list-style: none;
-}
-
-.skill-category li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #eee;
-    transition: var(--transition);
-}
-
-.skill-category li:last-child {
-    border-bottom: none;
-}
-
-.skill-category li:hover {
-    padding-right: 10px;
-    color: var(--secondary-color);
-}
-
-/* Projects Section */
-.projects {
-    padding: 5rem 0;
-    background: var(--white);
-}
-
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.project-card {
-    background: var(--white);
-    border-radius: 15px;
-    padding: 2rem;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    border: 2px solid transparent;
-}
-
-.project-card:hover {
-    transform: translateY(-10px);
-    border-color: var(--secondary-color);
-    box-shadow: 0 15px 40px rgba(52, 152, 219, 0.2);
-}
-
-.project-icon {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, var(--secondary-color), #2980b9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-}
-
-.project-icon i {
-    font-size: 2rem;
-    color: var(--white);
-}
-
-.project-card h3 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
-}
-
-.project-card ul {
-    list-style: none;
-    margin-bottom: 1.5rem;
-}
-
-.project-card li {
-    padding: 0.5rem 0;
-    padding-right: 1.5rem;
-    position: relative;
-}
-
-.project-card li::before {
-    content: '✓';
-    position: absolute;
     right: 0;
-    color: var(--secondary-color);
-    font-weight: bold;
-}
-
-.project-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--secondary-color);
-    text-decoration: none;
-    font-weight: 600;
-    transition: var(--transition);
-}
-
-.project-link:hover {
-    gap: 1rem;
-}
-
-/* Services Section */
-.services {
-    padding: 5rem 0;
-    background: var(--light-bg);
-}
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-}
-
-.service-card {
-    background: var(--white);
-    padding: 2.5rem;
-    border-radius: 15px;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    text-align: center;
-}
-
-.service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-}
-
-.service-icon {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, var(--accent-color), #c0392b);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-}
-
-.service-icon i {
-    font-size: 2.5rem;
-    color: var(--white);
-}
-
-.service-card h3 {
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    font-size: 1.3rem;
-}
-
-.service-card ul {
-    list-style: none;
-    text-align: right;
-}
-
-.service-card li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #eee;
-}
-
-.service-card li:last-child {
-    border-bottom: none;
-}
-
-/* Clients Section */
-.clients {
-    padding: 5rem 0;
-    background: var(--white);
-}
-
-.clients-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-}
-
-.client-item {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: var(--white);
-    padding: 1.5rem;
-    border-radius: 10px;
-    text-align: center;
-    font-weight: 600;
-    transition: var(--transition);
+    padding: 15px 30px;
+    z-index: 2000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  #header h1 {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
+    gap: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  }
 
-.client-item:hover {
+  #header .logo {
+    font-size: 32px;
+    animation: rotate 3s linear infinite;
+  }
+
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* أزرار التحكم في العرض */
+  .header-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .toggle-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Cairo', sans-serif;
+  }
+
+  .toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-}
+    border-color: rgba(255, 255, 255, 0.5);
+  }
 
-.client-item i {
-    font-size: 1.5rem;
-}
+  .toggle-btn.active {
+    background: rgba(255, 255, 255, 0.9);
+    color: #667eea;
+    border-color: white;
+  }
 
-/* Contact Section */
-.contact {
-    padding: 5rem 0;
-    background: var(--light-bg);
-}
-
-.contact-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-}
-
-.contact-info {
+  /* شريط الأدوات الجانبي */
+  #toolbar {
+    position: absolute;
+    right: 20px;
+    top: 90px;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    padding: 15px;
+    border-radius: 20px;
+    z-index: 1500;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-}
+    gap: 12px;
+    min-width: 180px;
+    transition: all 0.3s ease;
+  }
 
-.contact-item {
+  #toolbar.hidden {
+    transform: translateX(120%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .tool-section {
     display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    background: var(--white);
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-}
+    flex-direction: column;
+    gap: 8px;
+  }
 
-.contact-item i {
-    font-size: 1.5rem;
-    color: var(--secondary-color);
-    margin-top: 0.3rem;
-}
+  .section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    text-align: center;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
 
-.contact-item h4 {
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-}
-
-.contact-item p,
-.contact-item a {
-    color: var(--text-color);
-    text-decoration: none;
-}
-
-.social-links {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.social-links a {
-    width: 50px;
-    height: 50px;
-    background: var(--secondary-color);
-    color: var(--white);
-    border-radius: 50%;
+  button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
-    transition: var(--transition);
-}
-
-.social-links a:hover {
-    background: var(--primary-color);
-    transform: translateY(-5px);
-}
-
-.contact-form {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: var(--shadow);
-}
-
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border: 2px solid #eee;
-    border-radius: 8px;
+    gap: 8px;
     font-family: 'Cairo', sans-serif;
-    transition: var(--transition);
-}
+  }
 
-.contact-form input:focus,
-.contact-form textarea:focus {
-    outline: none;
-    border-color: var(--secondary-color);
-}
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+  }
 
-.contact-form button {
-    width: 100%;
-    padding: 1rem;
-    border: none;
+  button.active {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(245, 87, 108, 0.5);
+  }
+
+  button.danger {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  }
+
+  button.success {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #ddd, transparent);
+    margin: 4px 0;
+  }
+
+  /* لوحة المعلومات */
+  #info-panel {
+    position: absolute;
+    left: 20px;
+    top: 90px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 20px;
+    z-index: 1500;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    min-width: 250px;
+    max-width: 300px;
+    transition: all 0.3s ease;
+  }
+
+  #info-panel.hidden {
+    transform: translateX(-120%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #info-panel h3 {
+    color: #667eea;
+    font-size: 18px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .info-item {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .info-label {
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 4px;
+  }
+
+  .info-value {
+    color: #667eea;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  /* Popup محسّن */
+  .ol-popup {
+    position: absolute;
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    min-width: 250px;
+    max-width: 400px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    font-size: 14px;
+    line-height: 1.8;
+    color: #333;
+    z-index: 2500;
+    border: 3px solid #667eea;
+    animation: popupAppear 0.3s ease-out;
+  }
+
+  @keyframes popupAppear {
+    from {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .ol-popup:after {
+    display: none;
+  }
+
+  .ol-popup:before {
+    display: none;
+  }
+
+  .ol-popup-closer {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    text-decoration: none;
+    font-size: 24px;
+    color: #667eea;
+    font-weight: bold;
     cursor: pointer;
-    font-size: 1.1rem;
-}
+    transition: all 0.3s ease;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(102, 126, 234, 0.1);
+  }
 
-/* Footer */
-.footer {
-    background: var(--primary-color);
-    color: var(--white);
-    text-align: center;
-    padding: 2rem 0;
-}
+  .ol-popup-closer:hover {
+    color: #f5576c;
+    background: rgba(245, 87, 108, 0.2);
+    transform: rotate(90deg);
+  }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .burger {
-        display: flex;
+  #popup-content {
+    margin-top: 15px;
+  }
+
+  #popup-content b {
+    color: #667eea;
+    font-size: 18px;
+    display: block;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 8px;
+  }
+
+  #popup-content div {
+    margin: 8px 0;
+    padding: 8px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 8px;
+  }
+
+  /* التوقيع */
+  #footer {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,240,240,0.95) 100%);
+    backdrop-filter: blur(10px);
+    padding: 10px 25px;
+    border-radius: 25px;
+    font-weight: 700;
+    z-index: 1500;
+    font-size: 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #667eea;
+  }
+
+  .pulse {
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* تأثيرات الحركة */
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
     }
-
-    .nav-links {
-        position: fixed;
-        left: -100%;
-        top: 70px;
-        flex-direction: column;
-        background: var(--white);
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow: var(--shadow);
-        padding: 2rem 0;
+    to {
+      transform: translateX(0);
+      opacity: 1;
     }
+  }
 
-    .nav-links.active {
-        left: 0;
+  @keyframes slideInLeft {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
     }
-
-    .hero h1 {
-        font-size: 2.5rem;
+    to {
+      transform: translateX(0);
+      opacity: 1;
     }
+  }
 
-    .hero h2 {
-        font-size: 1.5rem;
+  #toolbar {
+    animation: slideInRight 0.5s ease-out;
+  }
+
+  #info-panel {
+    animation: slideInLeft 0.5s ease-out;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    #toolbar, #info-panel {
+      position: fixed;
+      max-width: 90%;
     }
-
-    .hero-buttons {
-        flex-direction: column;
-    }
-
-    .about-content {
-        grid-template-columns: 1fr;
-    }
-
-    .about-icon {
-        display: none;
-    }
-
-    .contact-content {
-        grid-template-columns: 1fr;
-    }
-
-    .skills-grid,
-    .projects-grid,
-    .services-grid {
-        grid-template-columns: 1fr;
-    }
-}
-</style><script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" async=""></script><script type="importmap">{
-  "imports": {}
-}</script></head><body>
-
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayoub Daouiri - WebGIS &amp; Geospatial Developer</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <i class="fas fa-map-marked-alt"></i>
-                <span>AYOUB DAOUIRI</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#home">الرئيسية</a></li>
-                <li><a href="#about">نبذة</a></li>
-                <li><a href="#skills">المهارات</a></li>
-                <li><a href="#projects">الأعمال</a></li>
-                <li><a href="#services">الخدمات</a></li>
-                <li><a href="#contact">تواصل</a></li>
-            </ul>
-            <div class="burger">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1 class="fade-in">AYOUB DAOUIRI</h1>
-            <h2 class="fade-in-delay">WebGIS &amp; Geospatial Developer</h2>
-            <p class="fade-in-delay-2">متخصص في نظم المعلومات الجغرافية، الكارطوغرافيا الرقمية، وتطوير منصّات WebGIS التفاعلية</p>
-            <div class="hero-buttons fade-in-delay-3">
-                <a href="#projects" class="btn btn-primary">استكشف أعمالي</a>
-                <a href="#contact" class="btn btn-secondary">تواصل معي</a>
-            </div>
-        </div>
-        <div class="hero-background"></div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">نبذة مختصرة</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>أنا خبير في الجيوماتيك والكارطوغرافيا، أمتلك خبرة قوية في تحليل البيانات الجغرافية وتطوير واجهات خرائط تفاعلية تعتمد على تقنيات حديثة. أشتغل على بناء منصّات GIS عبر الويب تسمح للمستخدمين باستكشاف البيانات الجغرافية بطريقة سلسة، مرنة، وسريعة.</p>
-                    <p>أساعد المؤسسات في تحويل بياناتها إلى خرائط تفاعلية عملية وقابلة للاستعمال في السياحة، التهيئة الحضرية، البيئة، النقل، العقار، والتنمية الترابية.</p>
-                </div>
-                <div class="about-icon">
-                    <i class="fas fa-globe-americas"></i>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2 class="section-title">المهارات التقنية</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <i class="fas fa-map"></i>
-                        <h3>تقنيات WebGIS</h3>
-                    </div>
-                    <ul>
-                        <li>Leaflet.js</li>
-                        <li>OpenLayers</li>
-                        <li>MapLibre / Mapbox</li>
-                        <li>Cesium 3D</li>
-                        <li>GeoServer</li>
-                        <li>QGIS Server</li>
-                        <li>GitHub Pages Hosting</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <i class="fas fa-satellite"></i>
-                        <h3>المعالجة الجيومكانية</h3>
-                    </div>
-                    <ul>
-                        <li>QGIS</li>
-                        <li>ArcGIS</li>
-                        <li>Google Earth Engine</li>
-                        <li>GDAL / Raster Processing</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <i class="fas fa-code"></i>
-                        <h3>تطوير الويب</h3>
-                    </div>
-                    <ul>
-                        <li>HTML5 / CSS3 / JavaScript</li>
-                        <li>JSON / GeoJSON</li>
-                        <li>APIs</li>
-                        <li>Git – GitHub</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <i class="fas fa-compass"></i>
-                        <h3>كارتوغرافيا احترافية</h3>
-                    </div>
-                    <ul>
-                        <li>تصميم خرائط عالية الدقة</li>
-                        <li>اختيار الرموز والألوان</li>
-                        <li>إنشاء Legend و UI احترافية</li>
-                        <li>بناء StoryMaps</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2 class="section-title">أبرز الأعمال</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3>منصة خرائط تفاعلية للسياحة – طنجة</h3>
-                    <ul>
-                        <li>عرض المعالم السياحية</li>
-                        <li>خطوط ومحطات النقل الحضري</li>
-                        <li>تصميم واجهة عصرية وسريعة</li>
-                        <li>بناء طبقات متعددة (POI + Transport + Services)</li>
-                    </ul>
-                    <a href="#" class="project-link">عرض المشروع <i class="fas fa-arrow-left"></i></a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-chart-area"></i>
-                    </div>
-                    <h3>تطبيق WebGIS لاستخراج مقطع طبوغرافي Online</h3>
-                    <ul>
-                        <li>استخراج Profile لأي نقطة في العالم</li>
-                        <li>بناء خوارزمية معالجة الارتفاعات</li>
-                        <li>عرض Chart تفاعلي</li>
-                        <li>تحميل النتائج بصيغة PDF/PNG</li>
-                    </ul>
-                    <a href="#" class="project-link">عرض المشروع <i class="fas fa-arrow-left"></i></a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-city"></i>
-                    </div>
-                    <h3>منصة لإدارة المشاريع الجماعية Commune WebGIS</h3>
-                    <ul>
-                        <li>خريطة للمشاريع التنموية</li>
-                        <li>متابعة تقدم إنجاز المشاريع</li>
-                        <li>إضافة layers: الإنارة، الطرق، المساحات الخضراء</li>
-                        <li>نظام بحث متقدم داخل الخريطة</li>
-                    </ul>
-                    <a href="#" class="project-link">عرض المشروع <i class="fas fa-arrow-left"></i></a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <h3>خريطة عقارية WebGIS Real Estate</h3>
-                    <ul>
-                        <li>عرض الأراضي والقطع المتاحة</li>
-                        <li>إظهار معلومات الملكية</li>
-                        <li>حساب المساحات والمسافات</li>
-                        <li>واجهة تستجيب للهاتف</li>
-                    </ul>
-                    <a href="#" class="project-link">عرض المشروع <i class="fas fa-arrow-left"></i></a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <h3>لوحة تحليل بيئي – NDVI Web Dashboard</h3>
-                    <ul>
-                        <li>تحليل الغطاء النباتي مباشرة من الخريطة</li>
-                        <li>Graphs + Charts</li>
-                        <li>تفاعل سريع مع GeoTIFF</li>
-                        <li>واجهة Dashboard كاملة</li>
-                    </ul>
-                    <a href="#" class="project-link">عرض المشروع <i class="fas fa-arrow-left"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="services">
-        <div class="container">
-            <h2 class="section-title">الخدمات المقدمة</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h3>تطوير منصّات WebGIS كاملة</h3>
-                    <ul>
-                        <li>خرائط تفاعلية متعددة الطبقات</li>
-                        <li>تحليل مكاني عبر المتصفح</li>
-                        <li>إدارة البيانات الجغرافية Online</li>
-                        <li>تصميم واجهة كاملة UX/UI</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-map-marked"></i>
-                    </div>
-                    <h3>خرائط سياحية احترافية</h3>
-                    <ul>
-                        <li>معالم، فنادق، ومسارات</li>
-                        <li>نقل حضري</li>
-                        <li>صور ووصف تفصيلي</li>
-                        <li>زر تحديد الموقع الحالي</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                    <h3>تطوير أدوات جغرافية Online</h3>
-                    <ul>
-                        <li>مقطع طبوغرافي</li>
-                        <li>حساب المسافات والمساحات</li>
-                        <li>تحويل الإحداثيات</li>
-                        <li>استخراج بيانات الارتفاع DEM</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-landmark"></i>
-                    </div>
-                    <h3>حلول رقمية للجماعات الترابية</h3>
-                    <ul>
-                        <li>خريطة المشاريع</li>
-                        <li>خريطة التهيئة</li>
-                        <li>خريطة الاستثمار</li>
-                        <li>خريطة البنيات التحتية</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-home"></i>
-                    </div>
-                    <h3>منصّات عرض العقارات</h3>
-                    <ul>
-                        <li>قطع أراضي، فيلات وشقق</li>
-                        <li>بيانات المالك</li>
-                        <li>محيط الموقع</li>
-                        <li>تكامل مع خدمات خارجية</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Clients Section -->
-    <section id="clients" class="clients">
-        <div class="container">
-            <h2 class="section-title">الفئات المستهدفة</h2>
-            <div class="clients-grid">
-                <div class="client-item"><i class="fas fa-building"></i> المجالس الجهوية للسياحة</div>
-                <div class="client-item"><i class="fas fa-city"></i> الجماعات الترابية</div>
-                <div class="client-item"><i class="fas fa-chart-line"></i> وكالات التنمية</div>
-                <div class="client-item"><i class="fas fa-hard-hat"></i> مكاتب الدراسات الهندسية</div>
-                <div class="client-item"><i class="fas fa-bus"></i> شركات النقل الحضري</div>
-                <div class="client-item"><i class="fas fa-key"></i> شركات العقار</div>
-                <div class="client-item"><i class="fas fa-university"></i> الجامعات ومراكز البحث</div>
-                <div class="client-item"><i class="fas fa-briefcase"></i> المقاولات الصغرى والمتوسطة</div>
-                <div class="client-item"><i class="fas fa-hotel"></i> الفنادق ومؤسسات السياحة</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">تواصل معي</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-user"></i>
-                        <div>
-                            <h4>الاسم</h4>
-                            <p>Ayoub Daouiri</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-briefcase"></i>
-                        <div>
-                            <h4>التخصص</h4>
-                            <p>WebGIS – Cartography – Geospatial Development</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <h4>الإيميل</h4>
-                            <p>contact@example.com</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <h4>الهاتف</h4>
-                            <p>+212 XXX XXX XXX</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-globe"></i>
-                        <div>
-                            <h4>الموقع الإلكتروني</h4>
-                            <p><a href="https://www.cartomaroc.com" target="_blank">www.cartomaroc.com</a></p>
-                        </div>
-                    </div>
-                    <div class="social-links">
-                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <input type="text" placeholder="الاسم الكامل" required="">
-                        <input type="email" placeholder="البريد الإلكتروني" required="">
-                        <input type="text" placeholder="الموضوع" required="">
-                        <textarea rows="5" placeholder="رسالتك..." required=""></textarea>
-                        <button type="submit" class="btn btn-primary">إرسال الرسالة</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>© 2025 Ayoub Daouiri - WebGIS Developer. جميع الحقوق محفوظة.</p>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
-
-
-<script>// Mobile Navigation
-const burger = document.querySelector('.burger');
-const nav = document.querySelector('.nav-links');
-const navLinks = document.querySelectorAll('.nav-links li');
-
-burger.addEventListener('click', () => {
-    nav.classList.toggle('active');
     
-    // Burger Animation
-    burger.classList.toggle('toggle');
+    #header h1 {
+      font-size: 18px;
+    }
+
+    .header-controls {
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .toggle-btn {
+      padding: 6px 12px;
+      font-size: 11px;
+    }
+
+    .ol-popup {
+      min-width: 200px;
+      max-width: 300px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div id="header">
+    <h1>
+      <span class="logo">🌍</span>
+      CartoMaroc 
+    </h1>
+    <div class="header-controls">
+      <button class="toggle-btn active" id="toggleToolbar">
+        <span>🛠️</span>
+        <span>الأدوات</span>
+      </button>
+      <button class="toggle-btn active" id="toggleInfo">
+        <span>📊</span>
+        <span>الإحصائيات</span>
+      </button>
+      <div style="color: white; font-size: 14px; margin-right: 10px;">
+        <span class="pulse">⚡</span> نظام احترافي
+      </div>
+    </div>
+  </div>
+
+  <div id="toolbar">
+    <div class="tool-section">
+      <div class="section-title">أدوات الرسم</div>
+      <button id="drawPoint">📍 نقطة</button>
+      <button id="drawLine">📏 خط</button>
+      <button id="drawPolygon">⬠ مضلع</button>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <div class="tool-section">
+      <div class="section-title">الإدارة</div>
+      <button id="deleteFeature" class="danger">🧹 حذف</button>
+      <button id="clearAll" class="danger">🗑 مسح الكل</button>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <div class="tool-section">
+      <div class="section-title">التصدير</div>
+      <button id="downloadGeoJSON" class="success">💾 حفظ GeoJSON</button>
+    </div>
+  </div>
+
+  <div id="info-panel">
+    <h3>📊 الإحصائيات</h3>
+    <div class="info-item">
+      <div class="info-label">عدد النقاط</div>
+      <div class="info-value" id="pointCount">0</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">عدد الخطوط</div>
+      <div class="info-value" id="lineCount">0</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">عدد المضلعات</div>
+      <div class="info-value" id="polygonCount">0</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">إجمالي العناصر</div>
+      <div class="info-value" id="totalCount">0</div>
+    </div>
+  </div>
+
+  <!-- Popup Element -->
+  <div id="popup" class="ol-popup">
+    <a href="#" id="popup-closer" class="ol-popup-closer">×</a>
+    <div id="popup-content"></div>
+  </div>
+
+  <div id="footer">
+    <span>🗺️</span>
+    <span>© CartoMaroc 2025 - Powered by OpenLayers</span>
+  </div>
+
+  <div id="map"></div>
+
+<script>
+  // --- Base Layers ---
+  const satellite = new ol.layer.Tile({
+    source: new ol.source.XYZ({
+      url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      attributions: 'Source: Esri, Earthstar Geographics'
+    })
+  });
+
+  const labels = new ol.layer.Tile({
+    source: new ol.source.XYZ({
+      url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
+      attributions: 'Esri - Boundaries & Places'
+    })
+  });
+
+  // --- Couche de dessin ---
+  const source = new ol.source.Vector();
+  const vector = new ol.layer.Vector({
+    source: source,
+    style: new ol.style.Style({
+      fill: new ol.style.Fill({color: 'rgba(102, 126, 234, 0.3)'}),
+      stroke: new ol.style.Stroke({color: '#667eea', width: 3}),
+      image: new ol.style.Circle({
+        radius: 8, 
+        fill: new ol.style.Fill({color: '#f5576c'}),
+        stroke: new ol.style.Stroke({color: 'white', width: 2})
+      })
+    })
+  });
+
+  // --- Popup Overlay ---
+  const popupElement = document.getElementById('popup');
+  const popupContent = document.getElementById('popup-content');
+  const popupCloser = document.getElementById('popup-closer');
+
+ const popupOverlay = new ol.Overlay({
+  element: popupElement,
+  autoPan: true,
+  autoPanAnimation: {
+    duration: 250
+  },
+ positioning: 'bottom-center',
+offset: [0, -15]
+
 });
 
-// Close menu when clicking on link
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        nav.classList.remove('active');
+
+  popupCloser.onclick = function() {
+    popupOverlay.setPosition(undefined);
+    popupCloser.blur();
+    return false;
+  };
+
+  // --- Initialisation de la carte ---
+  const map = new ol.Map({
+    target: 'map',
+    layers: [satellite, labels, vector],
+    overlays: [popupOverlay],
+    view: new ol.View({ 
+      center: ol.proj.fromLonLat([-7.5898, 33.5731]), // Casablanca
+      zoom: 7 
+    })
+  });
+
+  let draw = null;
+  let activeButton = null;
+  let deleteMode = false;
+
+  // --- أزرار إخفاء/إظهار اللوحات ---
+  document.getElementById('toggleToolbar').onclick = function() {
+    const toolbar = document.getElementById('toolbar');
+    toolbar.classList.toggle('hidden');
+    this.classList.toggle('active');
+  };
+
+  document.getElementById('toggleInfo').onclick = function() {
+    const infoPanel = document.getElementById('info-panel');
+    infoPanel.classList.toggle('hidden');
+    this.classList.toggle('active');
+  };
+
+  // --- تحديث الإحصائيات ---
+  function updateStats() {
+    const features = source.getFeatures();
+    let points = 0, lines = 0, polygons = 0;
+    
+    features.forEach(f => {
+      const type = f.getGeometry().getType();
+      if (type === 'Point') points++;
+      else if (type === 'LineString') lines++;
+      else if (type === 'Polygon') polygons++;
     });
-});
+    
+    document.getElementById('pointCount').textContent = points;
+    document.getElementById('lineCount').textContent = lines;
+    document.getElementById('polygonCount').textContent = polygons;
+    document.getElementById('totalCount').textContent = features.length;
+  }
 
-// Smooth Scrolling
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+  source.on('addfeature', updateStats);
+  source.on('removefeature', updateStats);
+
+  // --- Clic sur la carte (عرض Popup) ---
+  map.on('click', function(evt) {
+    if (draw) return;
+
+    if (deleteMode) {
+      map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+        if (confirm("🧹 هل تريد حذف هذا العنصر؟")) {
+          source.removeFeature(feature);
+          popupOverlay.setPosition(undefined);
         }
-    });
-});
+      });
+      return;
+    }
 
-// Navbar Background on Scroll
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 5px 30px rgba(0,0,0,0.1)';
+    // إظهار Popup عند النقر على عنصر
+    let clickedFeature = null;
+    let clickedCoordinate = null;
+    
+    map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+      clickedFeature = feature;
+      const geom = feature.getGeometry();
+      
+      // الحصول على أقرب نقطة من العنصر إلى مكان النقر
+      if (geom.getType() === 'Point') {
+        clickedCoordinate = geom.getCoordinates();
+      } else if (geom.getType() === 'LineString') {
+        clickedCoordinate = geom.getClosestPoint(evt.coordinate);
+      } else if (geom.getType() === 'Polygon') {
+        clickedCoordinate = geom.getInteriorPoint().getCoordinates();
+      }
+      
+      return true;
+    });
+
+    if (clickedFeature && clickedCoordinate) {
+      const popupInfo = clickedFeature.get('popup') || 'لا توجد معلومات';
+      popupContent.innerHTML = popupInfo;
+      popupOverlay.setPosition(clickedCoordinate);
     } else {
-        navbar.style.background = '#ffffff';
-        navbar.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
+      popupOverlay.setPosition(undefined);
     }
-});
+  });
 
-// Scroll Animation for Cards
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
+  // تغيير المؤشر عند المرور على عنصر
+  map.on('pointermove', function(evt) {
+    if (evt.dragging) return;
+    const pixel = map.getEventPixel(evt.originalEvent);
+    const hit = map.hasFeatureAtPixel(pixel);
+    map.getTargetElement().style.cursor = hit ? 'pointer' : '';
+  });
 
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
+  // --- Fonction pour activer le dessin ---
+  function toggleDraw(type, buttonId) {
+    const button = document.getElementById(buttonId);
+    if (activeButton === button) {
+      deactivateDraw();
+      return;
+    }
+    deactivateDraw();
+    deleteMode = false;
+    document.getElementById('deleteFeature').classList.remove('active');
+
+    activeButton = button;
+    button.classList.add('active');
+    draw = new ol.interaction.Draw({ source: source, type: type });
+    map.addInteraction(draw);
+
+    draw.on('drawend', function(e) {
+      const feature = e.feature;
+      const geom = feature.getGeometry();
+      const name = prompt("📝 أدخل اسم العنصر:", "عنصر_" + (source.getFeatures().length + 1));
+      feature.set('name', name || "عنصر");
+
+      let text = "";
+      if (geom.getType() === "Point") {
+        const coord = ol.proj.toLonLat(geom.getCoordinates());
+        text = `<div>📍 <strong>خط الطول:</strong> ${coord[0].toFixed(6)}</div>
+                <div>📍 <strong>خط العرض:</strong> ${coord[1].toFixed(6)}</div>`;
+      } else if (geom.getType() === "LineString") {
+        const length = ol.sphere.getLength(geom);
+        text = `<div>📏 <strong>الطول:</strong> ${(length/1000).toFixed(3)} كم</div>
+                <div>📐 <strong>بالمتر:</strong> ${length.toFixed(0)} م</div>`;
+      } else if (geom.getType() === "Polygon") {
+        const area = ol.sphere.getArea(geom);
+        text = `<div>📐 <strong>المساحة:</strong> ${area.toFixed(0)} م²</div>
+                <div>🌾 <strong>بالهكتار:</strong> ${(area/10000).toFixed(3)} ها</div>
+                <div>🗺️ <strong>بالكم²:</strong> ${(area/1e6).toFixed(4)} كم²</div>`;
+      }
+
+      feature.set('popup', `<b>${feature.get('name')}</b>${text}`);
+      deactivateDraw();
     });
-}, observerOptions);
+  }
 
-// Observe all cards
-document.querySelectorAll('.skill-category, .project-card, .service-card').forEach(card => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(30px)';
-    card.style.transition = 'all 0.6s ease';
-    observer.observe(card);
-});
+  // --- Désactivation du dessin ---
+  function deactivateDraw() {
+    if (draw) {
+      map.removeInteraction(draw);
+      draw = null;
+    }
+    if (activeButton) {
+      activeButton.classList.remove('active');
+      activeButton = null;
+    }
+  }
 
-// Form Submission
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('شكراً لتواصلك معنا! سنرد عليك في أقرب وقت ممكن.');
-        contactForm.reset();
+  // --- Boutons ---
+  document.getElementById('drawPoint').onclick = () => toggleDraw('Point', 'drawPoint');
+  document.getElementById('drawLine').onclick = () => toggleDraw('LineString', 'drawLine');
+  document.getElementById('drawPolygon').onclick = () => toggleDraw('Polygon', 'drawPolygon');
+
+  document.getElementById('deleteFeature').onclick = function() {
+    deactivateDraw();
+    deleteMode = !deleteMode;
+    this.classList.toggle('active');
+  };
+
+  document.getElementById('clearAll').onclick = () => {
+    if (confirm("⚠️ هل أنت متأكد من حذف جميع العناصر؟")) {
+      source.clear();
+      popupOverlay.setPosition(undefined);
+    }
+  };
+
+  document.getElementById('downloadGeoJSON').onclick = () => {
+    if (source.getFeatures().length === 0) {
+      alert("⚠️ لا توجد عناصر للحفظ!");
+      return;
+    }
+    const format = new ol.format.GeoJSON();
+    const json = format.writeFeatures(source.getFeatures(), {
+      featureProjection: map.getView().getProjection(),
+      dataProjection: 'EPSG:4326'
     });
-}
+    const blob = new Blob([json], {type: "application/geo+json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    const date = new Date().toISOString().slice(0,19).replace(/[T:]/g,"-");
+    a.download = "CartoMaroc_"+date+".geojson";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
-// Counter Animation for Statistics (Optional Enhancement)
-function animateCounter(element, target) {
-    let current = 0;
-    const increment = target / 100;
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            element.textContent = target;
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(current);
-        }
-    }, 20);
-}
-
-// Active Nav Link on Scroll
-window.addEventListener('scroll', () => {
-    let current = '';
-    const sections = document.querySelectorAll('section');
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (scrollY >= (sectionTop - 200)) {
-            current = section.getAttribute('id');
-        }
-    });
-
-    navLinks.forEach(li => {
-        const link = li.querySelector('a');
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
-});
-</script></body></html>
+  // تهيئة الإحصائيات عند التحميل
+  updateStats();
+</script>
+</body>
+</html>
