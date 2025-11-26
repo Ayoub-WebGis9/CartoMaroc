@@ -180,56 +180,52 @@
   }
 
   /* لوحة المعلومات */
-  #info-panel {
-    position: absolute;
-    left: 20px;
-    top: 90px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 20px;
-    border-radius: 20px;
-    z-index: 1500;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-    min-width: 250px;
-    max-width: 300px;
-    transition: all 0.3s ease;
-  }
+ #info-panel {
+  position: absolute;
+  left: 20px;
+  top: 90px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 15px;  /* كانت 20px - قللها لتصغير الحجم */
+  border-radius: 20px;
+  z-index: 1500;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  min-width: 180px;  /* كانت 250px - صغّرها */
+  max-width: 220px;  /* كانت 300px - صغّرها */
+  transition: all 0.3s ease;
+}
 
-  #info-panel.hidden {
-    transform: translateX(-120%);
-    opacity: 0;
-    pointer-events: none;
-  }
+#info-panel h3 {
+  color: #667eea;
+  font-size: 16px;  /* كانت 18px - صغّر الخط */
+  margin-bottom: 12px;  /* كانت 15px */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-  #info-panel h3 {
-    color: #667eea;
-    font-size: 18px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+.info-item {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 10px;  /* كانت 12px - قللها */
+  border-radius: 10px;
+  margin-bottom: 8px;  /* كانت 10px */
+  font-size: 12px;  /* كانت 13px - صغّر الخط */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
 
-  .info-item {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    font-size: 13px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
+.info-label {
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 4px;
+  font-size: 11px;  /* أضف هذا لتصغير النص */
+}
 
-  .info-label {
-    font-weight: 600;
-    color: #555;
-    margin-bottom: 4px;
-  }
+.info-value {
+  color: #667eea;
+  font-weight: 700;
+  font-size: 14px;  /* كانت 16px - صغّرها */
+}
 
-  .info-value {
-    color: #667eea;
-    font-weight: 700;
-    font-size: 16px;
-  }
 
   /* Popup محسّن */
   .ol-popup {
@@ -247,6 +243,67 @@
     border: 3px solid #667eea;
     animation: popupAppear 0.3s ease-out;
   }
+  /* نافذة المعلومات الثابتة */
+#fixed-info-box {
+  position: fixed;
+  bottom: 10px;
+  left: 20px;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  backdrop-filter: blur(10px);
+  padding: 15px;
+  border-radius: 15px;
+  z-index: 1500;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  min-width: 220px;
+  max-width: 280px;
+  border: 3px solid #667eea;
+  transition: all 0.3s ease;
+}
+
+
+#fixed-info-box h3 {
+  color: #667eea;
+  font-size: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 8px;
+}
+
+#fixed-info-content {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #333;
+}
+
+#fixed-info-content div {
+  margin: 6px 0;
+  padding: 8px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 8px;
+}
+
+#fixed-info-content b {
+  color: #667eea;
+  font-size: 15px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+#fixed-info-content strong {
+  color: #555;
+  font-weight: 600;
+}
+
+.empty-state {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 20px 10px;
+}
+
 
   @keyframes popupAppear {
     from {
@@ -420,6 +477,22 @@
       </div>
     </div>
   </div>
+
+
+
+
+  <!-- نافذة المعلومات الثابتة -->
+<div id="fixed-info-box">
+  <h3>ℹ️ معلومات</h3>
+  <div id="fixed-info-content">
+    <div class="empty-state">قم برسم أو تحديد عنصر لعرض معلوماته</div>
+  </div>
+</div>
+
+
+
+
+
 
   <div id="toolbar">
     <div class="tool-section">
@@ -704,6 +777,99 @@ offset: [0, -15]
       popupOverlay.setPosition(undefined);
     }
   };
+
+
+
+
+    // --- وظيفة لتحديث نافذة المعلومات الثابتة ---
+  function updateFixedInfoBox(feature) {
+    const fixedInfoContent = document.getElementById('fixed-info-content');
+    const popupInfo = feature.get('popup') || '';
+    if (popupInfo) {
+      fixedInfoContent.innerHTML = popupInfo;
+    }
+  }
+
+  // --- Fonction pour activer le dessin ---
+  function toggleDraw(type, buttonId) {
+    const button = document.getElementById(buttonId);
+    if (activeButton === button) {
+      deactivateDraw();
+      return;
+    }
+    deactivateDraw();
+    deleteMode = false;
+    document.getElementById('deleteFeature').classList.remove('active');
+
+    activeButton = button;
+    button.classList.add('active');
+    draw = new ol.interaction.Draw({ source: source, type: type });
+    map.addInteraction(draw);
+
+    draw.on('drawend', function(e) {
+      const feature = e.feature;
+      const geom = feature.getGeometry();
+      const name = prompt("📝 أدخل اسم العنصر:", "عنصر_" + (source.getFeatures().length + 1));
+      feature.set('name', name || "عنصر");
+
+      let text = "";
+      if (geom.getType() === "Point") {
+        const coord = ol.proj.toLonLat(geom.getCoordinates());
+        text = `<div>📍 <strong>خط الطول:</strong> ${coord[0].toFixed(6)}</div>
+                <div>📍 <strong>خط العرض:</strong> ${coord[1].toFixed(6)}</div>`;
+      } else if (geom.getType() === "LineString") {
+        const length = ol.sphere.getLength(geom);
+        text = `<div>📏 <strong>الطول:</strong> ${(length/1000).toFixed(3)} كم</div>
+                <div>📐 <strong>بالمتر:</strong> ${length.toFixed(0)} م</div>`;
+      } else if (geom.getType() === "Polygon") {
+        const area = ol.sphere.getArea(geom);
+        text = `<div>📐 <strong>المساحة:</strong> ${area.toFixed(0)} م²</div>
+                <div>🌾 <strong>بالهكتار:</strong> ${(area/10000).toFixed(3)} ها</div>
+                <div>🗺️ <strong>بالكم²:</strong> ${(area/1e6).toFixed(4)} كم²</div>`;
+      }
+
+      const fullInfo = `<b>${feature.get('name')}</b>${text}`;
+      feature.set('popup', fullInfo);
+      
+      // تحديث النافذة الثابتة
+      updateFixedInfoBox(feature);
+      
+      deactivateDraw();
+    });
+  }
+
+  // --- Clic sur la carte (عرض في النافذة الثابتة) ---
+  map.on('click', function(evt) {
+    if (draw) return;
+
+    if (deleteMode) {
+      map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+        if (confirm("🧹 هل تريد حذف هذا العنصر؟")) {
+          source.removeFeature(feature);
+          popupOverlay.setPosition(undefined);
+          // إعادة تعيين النافذة الثابتة
+          document.getElementById('fixed-info-content').innerHTML = 
+            '<div class="empty-state">قم برسم أو تحديد عنصر لعرض معلوماته</div>';
+        }
+      });
+      return;
+    }
+
+    // إظهار المعلومات في النافذة الثابتة عند النقر على عنصر
+    let clickedFeature = null;
+    
+    map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+      clickedFeature = feature;
+      return true;
+    });
+
+    if (clickedFeature) {
+      updateFixedInfoBox(clickedFeature);
+    }
+  });
+
+
+
 
   document.getElementById('downloadGeoJSON').onclick = () => {
     if (source.getFeatures().length === 0) {
