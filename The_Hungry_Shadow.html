@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" class=""><head><script>window.livecodes = window.livecodes || {};</script><title>Untitled Project</title><meta name="title" content="Untitled Project"><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><style id="__livecodes_styles__"></style><script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" async=""></script><script type="importmap">{
+  "imports": {}
+}</script></head><body>
+
+
+    <meta charset="UTF-8">
+    <title>الكائن المظلم</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { overflow: hidden; background: #000; cursor: none; }
+        canvas { display: block; }
+
+        #watermark {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Georgia', serif;
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            color: rgba(180, 20, 20, 0.18);
+            text-transform: uppercase;
+            pointer-events: none;
+            user-select: none;
+            white-space: nowrap;
+            z-index: 10;
+            text-shadow: 0 0 30px rgba(255,0,0,0.08);
+        }
+
+        #cursor-glow {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,50,50,0.9), rgba(200,0,0,0.3));
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            box-shadow: 0 0 20px 5px rgba(255,0,0,0.4);
+            transition: transform 0.05s;
+        }
+    </style>
+
+
+
+<canvas id="canvas"></canvas>
+<div id="watermark">Daouairi Ayoub</div>
+<div id="cursor-glow"></div>
+
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const glow = document.querySelector('#cursor-glow');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+    let prevMouse = { x: mouse.x, y: mouse.y };
+    let mouseSpeed = 0;
+
+    window.addEventListener('mousemove', (e) => {
+        prevMouse = { ...mouse };
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+        mouseSpeed = Math.hypot(mouse.x - prevMouse.x, mouse.y - prevMouse.y);
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+    });
+
+    // --- Creature config ---
+    const NUM_CREATURES = 3;
+    const numSegments = 28;
+    const segLength = 22;
+
+    // Background particles
+    const particles = [];
+    for (let i = 0; i < 80; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 1.5 + 0.3,
+            opacity: Math.random() * 0.4 + 0.05,
+            speed: Math.random() * 0.3 + 0.05,
+            drift: (Math.random() - 0.5) * 0.5
+        });
+    }
+
+    // Multiple creatures with offsets
+    const creatures = [];
+    for (let c = 0; c < NUM_CREATURES; c++) {
+        const segs = [];
+        for (let i = 0; i < numSegments; i++) {
+            segs.push({ x: canvas.width / 2, y: canvas.height / 2 });
+        }
+        creatures.push({
+            segments: segs,
+            delay: c * 6,
+            alpha: c === 0 ? 1 : 0.18 - c * 0.04,
+            scale: 1 - c * 0.15
+        });
+    }
+
+    // Eye blink timer
+    let blinkTimer = 0;
+    let blinkState = false;
+
+    // Ambient flicker
+    let flicker = 1;
+    let time = 0;
+
+    function updateCreature(creature, targetX, targetY) {
+        const segs = creature.segments;
+        segs[0].x += (targetX - segs[0].x) * 0.18;
+        segs[0].y += (targetY - segs[0].y) * 0.18;
+
+        for (let i = 1; i < numSegments; i++) {
+            const dx = segs[i - 1].x - segs[i].x;
+            const dy = segs[i - 1].y - segs[i].y;
+            const angle = Math.atan2(dy, dx);
+            segs[i].x = segs[i - 1].x - Math.cos(angle) * segLength;
+            segs[i].y = segs[i - 1].y - Math.sin(angle) * segLength;
+        }
+    }
+
+    function drawCreature(creature, isMain) {
+        const segs = creature.segments;
+
+        for (let i = 1; i < numSegments; i++) {
+            const dx = segs[i - 1].x - segs[i].x;
+            const dy = segs[i - 1].y - segs[i].y;
+            const angle = Math.atan2(dy, dx);
+            const t = i / numSegments;
+
+            ctx.save();
+            ctx.translate(segs[i].x, segs[i].y);
+            ctx.rotate(angle);
+
+            const bodyWidth = isMain
+                ? (1 - t) * 14 + 3
+                : (1 - t) * 8 + 2;
+
+            // Glow aura
+            if (isMain && i < 5) {
+                const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, bodyWidth * 4);
+                grad.addColorStop(0, `rgba(200,0,0,${0.18 * (1 - t) * flicker})`);
+                grad.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(0, 0, bodyWidth * 4, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Body segment
+            const alpha = creature.alpha * flicker;
+            const r = Math.floor(220 - t * 150);
+            const g = Math.floor(10 - t * 5);
+            const b = Math.floor(10 - t * 5);
+
+            ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+            ctx.lineWidth = bodyWidth;
+            ctx.lineCap = 'round';
+            ctx.shadowBlur = isMain ? 18 : 4;
+            ctx.shadowColor = `rgba(200,0,0,${0.6 * alpha})`;
+
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(segLength * 0.9, 0);
+            ctx.stroke();
+
+            // Spine detail
+            if (isMain) {
+                ctx.strokeStyle = `rgba(255,80,80,${0.25 * (1 - t) * alpha})`;
+                ctx.lineWidth = 1;
+                ctx.shadowBlur = 0;
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(segLength * 0.9, 0);
+                ctx.stroke();
+            }
+
+            // Legs / ribs
+            if (isMain && i % 2 === 0) {
+                const legLen = (1 - t) * 28 + 8;
+                const legAngle = Math.PI * 0.45;
+                const legAlpha = (1 - t) * alpha * 0.85;
+
+                // Create creepy bent legs
+                ctx.strokeStyle = `rgba(180,0,0,${legAlpha})`;
+                ctx.lineWidth = (1 - t) * 2.5 + 0.5;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = 'rgba(200,0,0,0.5)';
+
+                for (let side of [-1, 1]) {
+                    const midX = legLen * 0.5 * Math.cos(side * legAngle);
+                    const midY = legLen * 0.5 * Math.sin(side * legAngle) + side * legLen * 0.3;
+                    const endX = legLen * Math.cos(side * legAngle * 0.7);
+                    const endY = legLen * Math.sin(side * legAngle * 0.7) + side * legLen * 0.5;
+
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.quadraticCurveTo(midX, midY, endX, endY);
+                    ctx.stroke();
+
+                    // Claw tips
+                    for (let cl = -1; cl <= 1; cl += 2) {
+                        ctx.beginPath();
+                        ctx.moveTo(endX, endY);
+                        ctx.lineTo(endX + 5 * cl, endY + 8);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            ctx.restore();
+        }
+
+        // HEAD
+        if (isMain) {
+            drawHead(segs[0], segs[1]);
+        }
+    }
+
+    function drawHead(head, neck) {
+        const dx = head.x - neck.x;
+        const dy = head.y - neck.y;
+        const angle = Math.atan2(dy, dx);
+
+        ctx.save();
+        ctx.translate(head.x, head.y);
+        ctx.rotate(angle);
+
+        // Head glow
+        const hGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, 50);
+        hGrad.addColorStop(0, `rgba(180,0,0,${0.35 * flicker})`);
+        hGrad.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = hGrad;
+        ctx.beginPath();
+        ctx.arc(0, 0, 50, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Skull shape
+        ctx.shadowBlur = 25;
+        ctx.shadowColor = 'rgba(255,0,0,0.7)';
+        ctx.strokeStyle = `rgba(255,60,60,${0.9 * flicker})`;
+        ctx.fillStyle = `rgba(8,0,0,${0.95})`;
+        ctx.lineWidth = 2;
+
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 22, 17, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Eyes
+        const eyeOffsets = [{ x: 6, y: -6 }, { x: 6, y: 6 }];
+        eyeOffsets.forEach(({ x, y }) => {
+            if (!blinkState) {
+                // Eye glow
+                const eGrad = ctx.createRadialGradient(x, y, 0, x, y, 7);
+                eGrad.addColorStop(0, `rgba(255,50,50,${0.95 * flicker})`);
+                eGrad.addColorStop(0.5, `rgba(180,0,0,${0.7 * flicker})`);
+                eGrad.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = eGrad;
+                ctx.beginPath();
+                ctx.arc(x, y, 7, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Pupil
+                ctx.fillStyle = `rgba(0,0,0,0.9)`;
+                ctx.beginPath();
+                ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+                ctx.fill();
+            } else {
+                // Blink line
+                ctx.strokeStyle = `rgba(255,50,50,0.6)`;
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(x - 5, y);
+                ctx.lineTo(x + 5, y);
+                ctx.stroke();
+            }
+        });
+
+        // Teeth / mandibles
+        ctx.shadowBlur = 10;
+        ctx.strokeStyle = `rgba(255,120,120,${0.7 * flicker})`;
+        ctx.lineWidth = 1.5;
+        for (let t = 0; t < 4; t++) {
+            const tx = 14 + t * 4;
+            const ty = (t % 2 === 0 ? 1 : -1) * 10;
+            ctx.beginPath();
+            ctx.moveTo(14, 0);
+            ctx.lineTo(tx + 6, ty);
+            ctx.stroke();
+        }
+
+        ctx.restore();
+    }
+
+    // Dripping blood effect
+    const drips = [];
+    function spawnDrip() {
+        if (drips.length < 15 && Math.random() < 0.04) {
+            drips.push({
+                x: Math.random() * canvas.width,
+                y: 0,
+                vy: Math.random() * 2 + 1,
+                len: Math.random() * 40 + 20,
+                alpha: Math.random() * 0.5 + 0.2,
+                width: Math.random() * 3 + 1
+            });
+        }
+        drips.forEach((d, i) => {
+            d.y += d.vy;
+            if (d.y > canvas.height + d.len) drips.splice(i, 1);
+        });
+    }
+
+    function drawDrips() {
+        drips.forEach(d => {
+            const grad = ctx.createLinearGradient(d.x, d.y, d.x, d.y + d.len);
+            grad.addColorStop(0, `rgba(180,0,0,${d.alpha})`);
+            grad.addColorStop(1, `rgba(100,0,0,0)`);
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.ellipse(d.x, d.y + d.len * 0.5, d.width / 2, d.len / 2, 0, 0, Math.PI * 2);
+            ctx.fill();
+        });
+    }
+
+    // Vignette
+    function drawVignette() {
+        const grad = ctx.createRadialGradient(
+            canvas.width / 2, canvas.height / 2, canvas.height * 0.3,
+            canvas.width / 2, canvas.height / 2, canvas.height * 0.9
+        );
+        grad.addColorStop(0, 'rgba(0,0,0,0)');
+        grad.addColorStop(1, 'rgba(0,0,0,0.92)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawParticles() {
+        particles.forEach(p => {
+            p.y -= p.speed;
+            p.x += p.drift;
+            if (p.y < 0) { p.y = canvas.height; p.x = Math.random() * canvas.width; }
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(180,0,0,${p.opacity})`;
+            ctx.fill();
+        });
+    }
+
+    function animate() {
+        time += 0.02;
+        flicker = 0.88 + Math.sin(time * 7) * 0.06 + Math.sin(time * 13) * 0.04 + Math.random() * 0.02;
+
+        // Blink logic
+        blinkTimer++;
+        if (blinkTimer > 200 + Math.random() * 300) {
+            blinkState = true;
+            if (blinkTimer > 215) {
+                blinkState = false;
+                blinkTimer = 0;
+            }
+        }
+
+        // Scanline background
+        ctx.fillStyle = 'rgba(0,0,0,0.18)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Very faint red ambient
+        ctx.fillStyle = `rgba(30,0,0,${0.06 * flicker})`;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        drawParticles();
+        spawnDrip();
+        drawDrips();
+
+        // Shadow creatures (behind)
+        for (let c = NUM_CREATURES - 1; c >= 1; c--) {
+            const delay = creatures[c].delay;
+            const target = creatures[c - 1].segments[0];
+            updateCreature(creatures[c], target.x, target.y);
+            ctx.globalAlpha = creatures[c].alpha;
+            drawCreature(creatures[c], false);
+        }
+
+        // Main creature
+        ctx.globalAlpha = 1;
+        updateCreature(creatures[0], mouse.x, mouse.y);
+        drawCreature(creatures[0], true);
+
+        drawVignette();
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+</script>
+
+
+<script></script></body></html>
